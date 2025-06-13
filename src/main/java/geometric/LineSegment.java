@@ -33,7 +33,7 @@ public class LineSegment extends AbstractShape<LineSegment>
 	
 	public LineSegment(double x1, double y1, double x2, double y2, Paint paint, boolean drawEndpoints) {
 		this(
-			new Point(x1, y2, paint),
+			new Point(x1, y1, paint),
 			new Point(x2, y2, paint),
 			paint,
 			drawEndpoints,
@@ -50,7 +50,7 @@ public class LineSegment extends AbstractShape<LineSegment>
 	}
 	
 	public LineSegment(Point start, Point end, Paint paint, boolean drawEndpoints) {
-		this(start, end, paint, drawEndpoints, false);
+		this(start, end, paint, drawEndpoints, true);
 	}
 	
 	public LineSegment(Point start, Point end, Paint paint, boolean drawEndpoints, boolean copy) {
