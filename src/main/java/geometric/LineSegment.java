@@ -53,7 +53,7 @@ public class LineSegment extends AbstractShape<LineSegment>
 		this(start, end, paint, drawEndpoints, true);
 	}
 	
-	public LineSegment(Point start, Point end, Paint paint, boolean drawEndpoints, boolean copy) {
+	protected LineSegment(Point start, Point end, Paint paint, boolean drawEndpoints, boolean copy) {
 		if (copy) {
 			this.start = new Point(start);
 			this.end = new Point(end);
