@@ -1,0 +1,28 @@
+<launch4jConfig>
+	<outputFile>dist/GeometricFractals.exe</outputFile>
+	<jar>dist/GeometricFractals.jar</jar>
+	<mainClass>gui.GeometricFractals</mainClass>
+	<dontWrapJar>false</dontWrapJar>
+	
+	<headerType>gui</headerType>
+
+	<!-- JRE options -->
+	<jre>
+		<path>jre</path>
+		<bundledJre64Bit>true</bundledJre64Bit>
+		<minVersion>1.8.0</minVersion>
+		<maxVersion></maxVersion>
+		<jdkPreference>preferJre</jdkPreference>
+	</jre>
+
+	<!-- Optional: icon (put icon.ico in dist/) -->
+	<!-- <icon>dist/icon.ico</icon> -->
+
+	<!-- JVM Options (optional) -->
+	<!-- <opt>-Xmx512m</opt> -->
+
+	<!-- Stay silent on error or not -->
+	<stayAlive>false</stayAlive>
+	<restartOnCrash>false</restartOnCrash>
+</launch4jConfig>
+
