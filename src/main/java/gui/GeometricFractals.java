@@ -1,13 +1,14 @@
 package gui;
 
-import geometric.fractals.*;
-
 import geometric.AbstractGeometricFractal;
+import geometric.GeometricFractalRegistry;
 
 import renderer.FractalPanel;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import java.util.function.Supplier;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -53,16 +54,19 @@ public class GeometricFractals {
 
 	protected static JComponent getContentPane(
 		FractalPanel fractalPanel,
-		JComboBox<AbstractGeometricFractal<?>> comboBox
+		JComboBox<Supplier<AbstractGeometricFractal<?>>> comboBox
 	) {
+		// reference to the currently instantiated fractal
+		// this is needed for the resetCheck functionality
+		final AbstractGeometricFractal<?>[] currentFractal = new AbstractGeometricFractal<?>[1];
 
 		JCheckBox resetCheck = new JCheckBox("Reset on Completion");
 		resetCheck.setSelected(true);
 		resetCheck.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
-				AbstractGeometricFractal<?> selectedFractal = (AbstractGeometricFractal<?>) comboBox.getSelectedItem();
-				if (selectedFractal == null) return;
-				selectedFractal.setReset( resetCheck.isSelected() );
+				if (currentFractal[0] != null) {
+					currentFractal[0].setReset(resetCheck.isSelected());
+				}
 			}
 		});
 
@@ -72,8 +76,10 @@ public class GeometricFractals {
 
 		comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AbstractGeometricFractal<?> selectedFractal = (AbstractGeometricFractal<?>) comboBox.getSelectedItem();
-				if (selectedFractal == null) return;
+				@SuppressWarnings("unchecked")
+				Supplier<AbstractGeometricFractal<?>> selectedSupplier =
+					(Supplier<AbstractGeometricFractal<?>>) comboBox.getSelectedItem();
+				if (selectedSupplier == null) return;
 
 				comboBox.setEnabled(false);
 
@@ -84,21 +90,24 @@ public class GeometricFractals {
 					}
 
 					protected void done() {
-						selectedFractal.reset();
-						selectedFractal.setReset( resetCheck.isSelected() );
+						AbstractGeometricFractal<?> fractal = selectedSupplier.get();
+						currentFractal[0] = fractal;
+
+						fractal.reset();
+						fractal.setReset( resetCheck.isSelected() );
+
 						fractalPanel.clearDrawables();
-						fractalPanel.addDrawable(selectedFractal);
-						fractalPanel.setFPS( getFPS(selectedFractal) );
-						fractalPanel.setUPS( getUPS(selectedFractal) );
+						fractalPanel.addDrawable(fractal);
+						fractalPanel.setFPS(getFPS(fractal));
+						fractalPanel.setUPS(getUPS(fractal));
 						fractalPanel.moveViewTo(0, 0);
 						fractalPanel.setZoom(1.0);
 
 						new SwingWorker<Void, Void>() {
-							protected Void doInBackground() throws Exception {
+							protected Void doInBackground() {
 								fractalPanel.start();
 								return null;
 							}
-
 							protected void done() {
 								comboBox.setEnabled(true);
 							}
@@ -114,16 +123,41 @@ public class GeometricFractals {
 		return contentPane;
 	}
 
-	protected static void createAndShowGUI(List<AbstractGeometricFractal<?>> fractals) {
+	public static String getSupplierName(Supplier<?> supplier) {
+		try {
+			return supplier.get().toString();
+		} catch (Exception e) {
+			return "Unknown";
+		}
+	}
+
+	protected static JComboBox<Supplier<AbstractGeometricFractal<?>>> getComboBox(
+		List<Supplier<AbstractGeometricFractal<?>>> fractalSuppliers
+	) {
+		JComboBox<Supplier<AbstractGeometricFractal<?>>> comboBox = new JComboBox<>();
+		for (Supplier<AbstractGeometricFractal<?>> supplier : fractalSuppliers) {
+			final String supplierName = getSupplierName(supplier);
+			comboBox.addItem(new Supplier<AbstractGeometricFractal<?>>() {
+				public AbstractGeometricFractal<?> get() {
+					return supplier.get();
+				}
+
+				public String toString() {
+					return supplierName;
+				}
+			});
+		}
+
+		return comboBox;
+	}
+
+	protected static void createAndShowGUI(List<Supplier<AbstractGeometricFractal<?>>> fractalSuppliers) {
+		FractalPanel fractalPanel = new FractalPanel();
+		JComboBox<Supplier<AbstractGeometricFractal<?>>> comboBox = getComboBox(fractalSuppliers);
+
 		JFrame frame = new JFrame("Geometric Fractals");
-		// frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setPreferredSize(new Dimension(WIDTH, HEIGHT));
-
-		FractalPanel fractalPanel = new FractalPanel();
-		JComboBox<AbstractGeometricFractal<?>> comboBox = new JComboBox<>(
-			fractals.toArray(new AbstractGeometricFractal<?>[0])
-		);
 		frame.add( getContentPane(fractalPanel, comboBox) );
 		frame.pack();
 		frame.setLocationRelativeTo(null);
@@ -163,55 +197,15 @@ public class GeometricFractals {
 
 		frame.setVisible(true);
 	}
-    
-	public static void main(String[] args) {
-		List<AbstractGeometricFractal<?>> fractals = new ArrayList<>();
 
-		fractals.add(new BinarySierpinskiTriangle());
-		fractals.add(new BinarySierpinskiTriangleFilled());
-		fractals.add(new BoxFractal());
-		fractals.add(new CesaroCurves());
-		fractals.add(new CesaroFractal());
-		fractals.add(new CrossFractal());
-		fractals.add(new CrossKochCurve());
-		fractals.add(new HTree());
-		fractals.add(new InwardCircles());
-		fractals.add(new KochAntiSnowflake());
-		fractals.add(new KochLine());
-		fractals.add(new KochSnowflake());
-		fractals.add(new LevyCurve());
-		fractals.add(new LevyTapestryInside());
-		fractals.add(new LevyTapestryOutside());
-		fractals.add(new NumberLineCircles());
-		fractals.add(new OuterSierpinskiTriangle());
-		fractals.add(new OutwardCircles());
-		fractals.add(new PythagorasShrub());
-		fractals.add(new PythagorasTree());
-		fractals.add(new SierpinskiArrowhead());
-		fractals.add(new SierpinskiCarpet());
-		fractals.add(new SierpinskiCircle());
-		fractals.add(new SierpinskiCurve());
-		fractals.add(new SierpinskiCurve1());
-		fractals.add(new SierpinskiCurve2());
-		fractals.add(new SierpinskiCurve3());
-		fractals.add(new SierpinskiHexagon());
-		fractals.add(new SierpinskiRelatives());
-		fractals.add(new SierpinskiRelatives1());
-		fractals.add(new SierpinskiRelatives2());
-		fractals.add(new SierpinskiRelatives3());
-		fractals.add(new SierpinskiRelatives4());
-		fractals.add(new SierpinskiRelatives5());
-		fractals.add(new SierpinskiRelatives6());
-		fractals.add(new SierpinskiSnowflake());
-		fractals.add(new SierpinskiTriangle());
-		fractals.add(new Thorn());
-		fractals.add(new TornSquare());
-		fractals.add(new TriCircle());
-		fractals.add(new VicsekTriangle());
+	public static void main(String[] args) {
+		List<Supplier<AbstractGeometricFractal<?>>> fractalSuppliers = new ArrayList<>();
+		GeometricFractalRegistry.loadAllFractals();
+		fractalSuppliers.addAll(GeometricFractalRegistry.getAll().values());
 
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				createAndShowGUI(fractals);
+				createAndShowGUI(fractalSuppliers);
 			}
 		});
 	}
