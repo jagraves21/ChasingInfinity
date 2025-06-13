@@ -19,19 +19,18 @@ import java.awt.RadialGradientPaint;
 import java.awt.Paint;
 
 public class GoldenDragon extends AbstractGeometricFractal<GoldenDragon> {
-	double PHI = (1 + Math.sqrt(5))/2;
-	double RATIO = Math.pow(1/PHI, 1/PHI);
-	double ANGLE_A = Math.toDegrees(Math.acos(
+	public static final double PHI = (1 + Math.sqrt(5))/2;
+	public static final double RATIO = Math.pow(1/PHI, 1/PHI);
+	public static final double ANGLE_A = Math.toDegrees(Math.acos(
 		(1 + Math.pow(RATIO,2) - Math.pow(RATIO,4)) / (2*RATIO)
 	));
-	double ANGLE_B = Math.toDegrees(Math.acos(
+	public static final double ANGLE_B = Math.toDegrees(Math.acos(
 		(1 + Math.pow(RATIO,4) - Math.pow(RATIO,2)) / (2*Math.pow(RATIO,2))
 	));
-	double ANGLE_C = 180 - (ANGLE_A + ANGLE_B);
+	public static final double ANGLE_C = 180 - (ANGLE_A + ANGLE_B);
 
-	Point center;
-	Point pointOnCircle;
-
+	protected Point center;
+	protected Point pointOnCircle;
 	protected List<Transformable> seed;
 	protected List<Transformable> fractalComponents;
 

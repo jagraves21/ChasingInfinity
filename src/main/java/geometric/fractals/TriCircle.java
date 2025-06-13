@@ -21,7 +21,6 @@ import java.awt.RadialGradientPaint;
 public class TriCircle extends AbstractGeometricFractal<TriCircle> {
 	protected Point center;
 	protected Point pointOnCircle;
-
 	protected List<Circle> seed;
 	protected List<Circle> currentCircles;
 	protected List<Transformable> fractalComponents;

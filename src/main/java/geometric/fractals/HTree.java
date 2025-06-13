@@ -18,9 +18,8 @@ import java.awt.GradientPaint;
 import java.awt.Paint;
 
 public class HTree extends AbstractGeometricFractal<HTree> {
-	Point left;
-	Point right;
-
+	protected Point left;
+	protected Point right;
 	protected List<LineSegment> seed;
 	protected List<LineSegment> currentSegments;
 	protected List<Transformable> fractalComponents;

@@ -18,9 +18,8 @@ import java.awt.RadialGradientPaint;
 import java.awt.Paint;
 
 public class VicsekTriangle extends AbstractGeometricFractal<VicsekTriangle> {
-	Point center;
-	Point pointOnCircle;
-
+	protected Point center;
+	protected Point pointOnCircle;
 	protected List<Transformable> seed;
 	protected List<Transformable> fractalComponents;
 

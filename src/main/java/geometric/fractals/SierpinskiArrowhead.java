@@ -22,7 +22,6 @@ import java.awt.RadialGradientPaint;
 public class SierpinskiArrowhead extends AbstractGeometricFractal<SierpinskiArrowhead> {
 	protected Point center;
 	protected Point pointOnCircle;
-
 	protected List<Transformable> seed;
 	protected List<Transformable> fractalComponents;
 

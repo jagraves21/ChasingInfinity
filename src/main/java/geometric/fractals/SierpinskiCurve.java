@@ -22,10 +22,8 @@ import java.awt.RadialGradientPaint;
 public class SierpinskiCurve extends AbstractGeometricFractal<SierpinskiCurve> {
 	protected Point center;
 	protected Point pointOnCircle;
-
 	protected List<Transformable> seed;
 	protected List<Transformable> fractalComponents;
-
 
 	public SierpinskiCurve() {
 		this(getSuggestedIterations());

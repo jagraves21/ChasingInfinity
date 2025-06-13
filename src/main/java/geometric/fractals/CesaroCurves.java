@@ -28,10 +28,9 @@ public class CesaroCurves extends AbstractGeometricFractal<CesaroCurves> {
 	protected double INTERIOR_ANGLE = -Math.toDegrees( Math.acos((BASE/2)/LEGS) );
 	protected double EXTERIOR_ANGLE = INTERIOR_ANGLE - 180;
 
-	Point center;
-	Point pointOnCircle;
-	Color[] colors = null;
-
+	protected Point center;
+	protected Point pointOnCircle;
+	protected Color[] colors = null;
 	protected List<Transformable> seed;
 	protected List<Transformable> fractalComponents;
 

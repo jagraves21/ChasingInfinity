@@ -21,7 +21,6 @@ import java.awt.Paint;
 public class BinarySierpinskiTriangle extends AbstractGeometricFractal<BinarySierpinskiTriangle> {
 	protected Point center;
     protected Point pointOnCircle;
-
 	protected List<Transformable> seed;
 	protected List<Transformable> fractalComponents;
 

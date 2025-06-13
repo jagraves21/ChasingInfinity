@@ -18,9 +18,8 @@ import java.awt.RadialGradientPaint;
 import java.awt.Paint;
 
 public class Thorn extends AbstractGeometricFractal<Thorn> {
-	Point center;
-	Point pointOnCircle;
-
+	protected Point center;
+	protected Point pointOnCircle;
 	protected List<Transformable> seed;
 	protected List<Transformable> fractalComponents;
 

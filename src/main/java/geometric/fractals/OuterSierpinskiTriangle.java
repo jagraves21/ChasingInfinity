@@ -22,7 +22,6 @@ import java.awt.RadialGradientPaint;
 public class OuterSierpinskiTriangle extends AbstractGeometricFractal<OuterSierpinskiTriangle> {
 	protected Point center;
 	protected Point pointOnCircle;
-
 	protected List<Triangle> seed;
 	protected List<Triangle> currentTriangles;
 	protected List<Transformable> fractalComponents;

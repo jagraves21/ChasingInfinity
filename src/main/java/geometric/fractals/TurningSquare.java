@@ -18,9 +18,8 @@ import java.awt.Paint;
 import java.awt.RadialGradientPaint;
 
 public class TurningSquare extends AbstractGeometricFractal<TurningSquare> {
-	Point center;
-	Point pointOnCircle;
-
+	protected Point center;
+	protected Point pointOnCircle;
 	protected Polygon seedSquare;
 	protected Polygon currentSquare;
 	protected List<Transformable> fractalComponents;

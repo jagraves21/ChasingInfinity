@@ -19,16 +19,14 @@ import java.awt.GradientPaint;
 import java.awt.Paint;
 
 public class SierpinskiSnowflake extends AbstractGeometricFractal<SierpinskiSnowflake> {
-	public final double RATIO = 1.0/3.0;
-	public final double LEGS = RATIO;
-	public final double BASE = 1.0 - 2*RATIO;
-	public final double INTERIOR_ANGLE = Math.toDegrees( Math.acos((BASE/2)/LEGS) );
-	public final double EXTERIOR_ANGLE = INTERIOR_ANGLE - 180;
+	public static final double RATIO = 1.0/3.0;
+	public static final double LEGS = RATIO;
+	public static final double BASE = 1.0 - 2*RATIO;
+	public static final double INTERIOR_ANGLE = Math.toDegrees( Math.acos((BASE/2)/LEGS) );
+	public static final double EXTERIOR_ANGLE = INTERIOR_ANGLE - 180;
 
-
-	Point topLeft;
-	Point bottomRight;
-
+	protected Point topLeft;
+	protected Point bottomRight;
 	protected List<Transformable> seed;
 	protected List<Transformable> fractalShapes;
 	protected List<Transformable> fractalComponents;

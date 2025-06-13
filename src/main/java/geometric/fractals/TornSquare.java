@@ -20,15 +20,14 @@ import java.awt.Paint;
 import java.awt.RadialGradientPaint;
 
 public class TornSquare extends AbstractGeometricFractal<TornSquare> {
-	public final double RATIO = 0.48;
-	public final double LEGS = RATIO;
-	public final double BASE = 1.0 - 2*RATIO;
-	public final double INTERIOR_ANGLE = -Math.toDegrees( Math.acos((BASE/2)/LEGS) );
-	public final double EXTERIOR_ANGLE = INTERIOR_ANGLE - 180;
+	public static final double RATIO = 0.48;
+	public static final double LEGS = RATIO;
+	public static final double BASE = 1.0 - 2*RATIO;
+	public static final double INTERIOR_ANGLE = -Math.toDegrees( Math.acos((BASE/2)/LEGS) );
+	public static final double EXTERIOR_ANGLE = INTERIOR_ANGLE - 180;
 
-	Point center;
-	Point pointOnCircle;
-
+	protected Point center;
+	protected Point pointOnCircle;
 	protected Polygon seed;
 	protected List<Transformable> fractalComponents;
 

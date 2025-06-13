@@ -23,7 +23,6 @@ public class BinarySierpinskiTriangleFilled
 
 	protected Point center;
     protected Point pointOnCircle;
-
 	protected List<Transformable> seed;
 	protected List<Transformable> fractalComponents;
 

@@ -21,7 +21,6 @@ import java.awt.RadialGradientPaint;
 public class OutwardCircles extends AbstractGeometricFractal<OutwardCircles> {
 	protected Point center;
 	protected Point pointOnCircle;
-
 	protected List<Circle> seed;
 	protected List<Circle> currentCircles;
 	protected List<Transformable> fractalComponents;

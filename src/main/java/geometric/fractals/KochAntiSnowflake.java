@@ -19,17 +19,16 @@ import java.awt.GradientPaint;
 import java.awt.Paint;
 
 public class KochAntiSnowflake extends AbstractGeometricFractal<KochAntiSnowflake> {
-	public final double RATIO = 1.0/3.0;
-	public final double LEGS = RATIO;
-	public final double BASE = 1.0 - 2*RATIO;
-	public final double INTERIOR_ANGLE = Math.toDegrees( Math.acos((BASE/2)/LEGS) );
-	public final double EXTERIOR_ANGLE = INTERIOR_ANGLE - 180;
+	public static final double RATIO = 1.0/3.0;
+	public static final double LEGS = RATIO;
+	public static final double BASE = 1.0 - 2*RATIO;
+	public static final double INTERIOR_ANGLE = Math.toDegrees( Math.acos((BASE/2)/LEGS) );
+	public static final double EXTERIOR_ANGLE = INTERIOR_ANGLE - 180;
 
-	Point topRight;
-	Point bottomLeft;
-	Color c1;
-	Color c2;
-
+	protected Point topRight;
+	protected Point bottomLeft;
+	protected Color c1;
+	protected Color c2;
 	protected List<Transformable> seed;
 	protected List<Transformable> fractalComponents;
 

@@ -21,7 +21,6 @@ import java.awt.RadialGradientPaint;
 public class BoxFractal extends AbstractGeometricFractal<BoxFractal> {
 	protected Point center;
 	protected Point pointOnCircle;
-
 	protected List<Transformable> seed;
 	protected List<Transformable> fractalComponents;
 

@@ -18,7 +18,6 @@ import java.awt.Color;
 public class SierpinskiCurve2 extends AbstractGeometricFractal<SierpinskiCurve2> {
 	protected Point center;
 	protected Point pointOnCircle;
-
 	protected List<Transformable> seed;
 	protected List<Transformable> fractalComponents;
 

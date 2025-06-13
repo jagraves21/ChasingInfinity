@@ -18,23 +18,7 @@ import java.awt.Color;
 import java.awt.RadialGradientPaint;
 import java.awt.Paint;
 
-public class GoldenDragon2 extends AbstractGeometricFractal<GoldenDragon2> {
-	double PHI = (1 + Math.sqrt(5))/2;
-	double RATIO = Math.pow(1/PHI, 1/PHI);
-	double ANGLE_A = Math.toDegrees(Math.acos(
-		(1 + Math.pow(RATIO,2) - Math.pow(RATIO,4)) / (2*RATIO)
-	));
-	double ANGLE_B = Math.toDegrees(Math.acos(
-		(1 + Math.pow(RATIO,4) - Math.pow(RATIO,2)) / (2*Math.pow(RATIO,2))
-	));
-	double ANGLE_C = 180 - (ANGLE_A + ANGLE_B);
-
-	Point center;
-	Point pointOnCircle;
-
-	protected List<Transformable> seed;
-	protected List<Transformable> fractalComponents;
-
+public class GoldenDragon2 extends GoldenDragon {
 	public GoldenDragon2() {
 		this(getSuggestedIterations());
 	}
@@ -51,35 +35,6 @@ public class GoldenDragon2 extends AbstractGeometricFractal<GoldenDragon2> {
 		super(iterations, reset);
 	}
 		
-	public static int getSuggestedIterations() {
-		return 18;
-	}
-
-	public Paint getPaint() {
-		return getPaint(
-			this.center,
-			this.pointOnCircle
-		);
-	}
-
-	public Paint getPaint(WorldViewer worldViewer) {
-		return getPaint(
-			this.center.toScreen(worldViewer),
-			this.pointOnCircle.toScreen(worldViewer)
-		);
-	}
-
-	protected Paint getPaint(Point center, Point pointOnCircle) {
-		return new RadialGradientPaint(
-			(float) center.getX(),
-			(float) center.getY(),
-			(float) center.distance(pointOnCircle),
-			new float[] {0.3f, 1.0f},
-			new Color[] {NamedColors.RED, NamedColors.YELLOW}
-			//MultipleGradientPaint.CycleMethod.REPEAT
-		);
-	}
-
 	protected void init() {
 		super.init();
 
@@ -104,52 +59,8 @@ public class GoldenDragon2 extends AbstractGeometricFractal<GoldenDragon2> {
 		fractalComponents = seed;
 	}
 
-	public void reset() {
-		super.reset();
-		fractalComponents = seed;
-	}
-
-	public void step() {
-		List<Transformable> newComponents = new LinkedList<>();
-		for (Transformable component : fractalComponents) {
-			if (component instanceof LineSegment) {
-				LineSegment lineSegment = (LineSegment) component;
-				Paint paint = lineSegment.getPaint();
-				boolean drawEndpoints = lineSegment.getDrawEndpoints();
-
-				Point p1 = lineSegment.getStart();
-				Point p3 = lineSegment.getEnd();
-				Point p2 = p1.interpolate(p3, RATIO).rotateAround(p1, ANGLE_A);
-				p2.setPaint(ColorUtils.blend(
-					(Color)p1.getPaint(),
-					(Color)p3.getPaint(),
-					RATIO
-				));
-
-				newComponents.add(new LineSegment(
-					p1, p2,
-					ColorUtils.blend((Color)p1.getPaint(), (Color)p2.getPaint()),
-					drawEndpoints
-				));
-				newComponents.add(new LineSegment(
-					p3, p2,
-					ColorUtils.blend((Color)p3.getPaint(), (Color)p2.getPaint()),
-					drawEndpoints
-				));
-			}
-			else {
-				newComponents.add(component);
-			}
-		}
-		fractalComponents = newComponents;
-	}
-
 	public GoldenDragon2 self() {
 		return this;
-	}
-
-	public Iterator<Transformable> iterator() {
-		return fractalComponents.iterator();
 	}
 
 	public String toString() {

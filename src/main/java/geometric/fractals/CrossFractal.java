@@ -21,7 +21,6 @@ import java.awt.RadialGradientPaint;
 public class CrossFractal extends AbstractGeometricFractal<CrossFractal> {
 	protected Point center;
 	protected Point pointOnCircle;
-
 	protected List<Transformable> seed;
 	protected List<Transformable> fractalComponents;
 

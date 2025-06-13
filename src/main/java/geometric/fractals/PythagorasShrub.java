@@ -18,9 +18,8 @@ import java.awt.GradientPaint;
 import java.awt.Paint;
 
 public class PythagorasShrub extends AbstractGeometricFractal<PythagorasShrub> {
-	Point topLeft;
-	Point bottomRight;
-
+	protected Point topLeft;
+	protected Point bottomRight;
 	protected List<Polygon> seed;
 	protected List<Polygon> currentSquares;
 	protected List<Transformable> fractalComponents;
