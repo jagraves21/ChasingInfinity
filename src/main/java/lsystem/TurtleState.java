@@ -48,20 +48,20 @@ import java.awt.Graphics;
  */
 
 public class TurtleState {
-	private static final double DEFAULT_X = 0.0;
-	private static final double DEFAULT_Y = 0.0;
-	private static final double DEFAULT_ANGLE = 0.0;
-	private static final double DEFAULT_LINE_LENGTH = 10.0;
-	private static final double DEFAULT_LINE_WIDTH = 1.0;
-	private static final double DEFAULT_TURNING_ANGLE = 0.0;
-	private static final boolean DEFAULT_SWAP_TURN_DIRS = false;
-	private static final double DEFAULT_ANGLE_SCALE = 2.0;
-	private static final double DEFAULT_ANGLE_SHIFT = 1.0;
-	private static final double DEFAULT_LINE_LENGTH_SCALE = 2.0;
-	private static final double DEFAULT_LINE_LENGTH_SHIFT = 1.0;
-	private static final double DEFAULT_LINE_WIDTH_SCALE = 2.0;
-	private static final double DEFAULT_LINE_WIDTH_SHIFT = 1.0;
-	private static final double REVERSE_DIRECTION_ANGLE = 180.0;
+	public static final double DEFAULT_X = 0.0;
+	public static final double DEFAULT_Y = 0.0;
+	public static final double DEFAULT_ANGLE = 0.0;
+	public static final double DEFAULT_LINE_LENGTH = 10.0;
+	public static final double DEFAULT_LINE_WIDTH = 1.0;
+	public static final double DEFAULT_TURNING_ANGLE = 0.0;
+	public static final boolean DEFAULT_SWAP_TURN_DIRS = false;
+	public static final double DEFAULT_ANGLE_SCALE = 2.0;
+	public static final double DEFAULT_ANGLE_SHIFT = 1.0;
+	public static final double DEFAULT_LINE_LENGTH_SCALE = 2.0;
+	public static final double DEFAULT_LINE_LENGTH_SHIFT = 1.0;
+	public static final double DEFAULT_LINE_WIDTH_SCALE = 2.0;
+	public static final double DEFAULT_LINE_WIDTH_SHIFT = 1.0;
+	public static final double REVERSE_DIRECTION_ANGLE = 180.0;
 
 	public double x;                      // X position of the drawing turtle
 	public double y;                      // Y position of the drawing turtle
