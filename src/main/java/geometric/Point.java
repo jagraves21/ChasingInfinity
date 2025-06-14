@@ -68,7 +68,7 @@ public class Point extends AbstractShape<Point> {
 		this.x = x;
 		this.y = y;
 	}
-	
+
 	public double distance(Point other) {
 		return Math.hypot(x - other.x, y - other.y);
 	}
@@ -227,7 +227,7 @@ public class Point extends AbstractShape<Point> {
 
 		return !(offLeft || offTop || offRight || offBottom);
 	}
-	
+
 	public void drawWithPaint(Graphics g) {
 		if (paint == null) return;
 		int diameter = (int)Math.max(1, Math.round(2 * radius));

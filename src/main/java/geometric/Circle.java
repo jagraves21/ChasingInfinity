@@ -163,7 +163,7 @@ public class Circle extends AbstractShape<Circle> {
 	public boolean isVisibleOnScreen(WorldViewer worldViewer) {
 		return point.isVisibleOnScreen(worldViewer);
 	}
-	
+
 	public void drawWithPaint(Graphics g) {
 		int diameter = (int)Math.max(1, Math.round(2 * getRadius()));
 		int drawX = (int)Math.round(getX() - getRadius());

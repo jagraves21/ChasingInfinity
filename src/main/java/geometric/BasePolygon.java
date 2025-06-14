@@ -39,7 +39,7 @@ public abstract class BasePolygon<T extends BasePolygon<T>> extends AbstractShap
 	protected abstract BasePolygon<T> createCopy(
 		List<Point> vertices, Paint paint, boolean fill, boolean deepCopy
 	);
-	
+
 	public java.awt.Polygon toAWTPolygon() {
 		java.awt.Polygon polygon = new java.awt.Polygon();
 		for (Point p : vertices) {
@@ -62,7 +62,7 @@ public abstract class BasePolygon<T extends BasePolygon<T>> extends AbstractShap
 
 	public void setPaint(Paint paint) { this.paint = paint; }
 	public void setFill(boolean fill) { this.fill = fill; }
-	
+
 	public double area() {
 		return Math.abs(signedArea());
 	}
@@ -77,7 +77,7 @@ public abstract class BasePolygon<T extends BasePolygon<T>> extends AbstractShap
 		}
 		return sum / 2.0;
 	}
-	
+
 	public Point centroid() {
 		double cx = 0;
 		double cy = 0;
@@ -167,7 +167,7 @@ public abstract class BasePolygon<T extends BasePolygon<T>> extends AbstractShap
 		}
 		return false;
 	}
-	
+
 	public void drawWithPaint(Graphics g) {
 		java.awt.Polygon polygon = toAWTPolygon();
 		if (isFilled()) g.fillPolygon(polygon);

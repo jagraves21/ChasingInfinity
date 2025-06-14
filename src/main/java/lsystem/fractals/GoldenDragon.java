@@ -64,10 +64,10 @@ public class GoldenDragon extends AbstractLSystemFractal {
 		double turningAngle = A;
 		double angleShift = -B;
 		double lineLengthScale = r;
-		System.out.printf("A = %f (%f)%n", A, Math.toRadians(A)); 
-		System.out.printf("B = %f (%f)%n", B, Math.toRadians(B)); 
-		System.out.printf("C = %f (%f)%n", C, Math.toRadians(C)); 
-		System.out.printf("angleShift = %f (%f)%n", angleShift, Math.toRadians(angleShift)); 
+		System.out.printf("A = %f (%f)%n", A, Math.toRadians(A));
+		System.out.printf("B = %f (%f)%n", B, Math.toRadians(B));
+		System.out.printf("C = %f (%f)%n", C, Math.toRadians(C));
+		System.out.printf("angleShift = %f (%f)%n", angleShift, Math.toRadians(angleShift));
 		return new TurtleState.Builder()
 			.setX(-200)
 			.setY(0)

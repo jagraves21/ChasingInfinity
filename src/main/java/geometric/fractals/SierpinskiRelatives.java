@@ -121,7 +121,7 @@ public class SierpinskiRelatives extends AbstractGeometricFractal<SierpinskiRela
 
 		return vertices;
 	}
-	
+
 	protected Polygon translateTopLeft(Polygon square, Point[] points) {
 		Polygon newSquare = new Polygon(points, square.getPaint(), square.isFilled());
 		if(fractalComponents.size() == 1) {
@@ -169,17 +169,17 @@ public class SierpinskiRelatives extends AbstractGeometricFractal<SierpinskiRela
 		if(newSquare != null) {
 			results.add(newSquare);
 		}
-		
+
 		newSquare = translateTopRight(square, new Point[] {top, topRight, right, middle});
 		if(newSquare != null) {
 			results.add(newSquare);
 		}
-		
+
 		newSquare = translateBottomLeft(square, new Point[] {left, middle, bottom, bottomLeft});
 		if(newSquare != null) {
 			results.add(newSquare);
 		}
-		
+
 		newSquare = translateBottomRight(square, new Point[] {middle, right, bottomRight, bottom});
 		if(newSquare != null) {
 			results.add(newSquare);

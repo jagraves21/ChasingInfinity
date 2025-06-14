@@ -18,15 +18,15 @@ public abstract class AbstractFractal implements Drawable {
 	public AbstractFractal() {
 		init();
 	}
-	
+
 	protected abstract void init();
 	public abstract void reset();
 	public abstract void step();
-	
+
 	public static int getSuggestedFPS() {
 		return 60;
 	}
-	
+
 	public static int getSuggestedUPS() {
 		return 1;
 	}

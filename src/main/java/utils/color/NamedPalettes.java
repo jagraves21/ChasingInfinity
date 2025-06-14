@@ -206,7 +206,7 @@ public class NamedPalettes extends NamedColors {
 		registerPalette("GAS_ON_WATER", GAS_ON_WATER);
 		registerPalette("xTEST", xTEST);
 	}
-	
+
 
 	private static void registerPalette(String name, Color[] palette) {
 		if (name == null) {

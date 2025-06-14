@@ -18,7 +18,7 @@ import java.awt.Graphics;
  * +       | Turn left by turning angle
  * -       | Turn right by turning angle
  * |       | Reverse direction (i.e., turn by 180 degrees)
- 
+
  * ~       | Swap the meaning of + and -
 
  * .       | Draw dot at current location
@@ -27,7 +27,7 @@ import java.awt.Graphics;
 
  * [       | Save the current state
  * ]       | Restore last saved state
- 
+
  * v       | Divide turning angle by current angle scale factor
  * ^       | Multiply turning angle by current angle scale factor
  * (       | Subtract current turning angle shift amount from turning angle
@@ -68,19 +68,19 @@ public class TurtleState {
 	public double angle;                  // Current direction in degrees (0 is pointing to the right)
 	public double lineLength;             // Current length of the line to draw
 	public double lineWidth;              // Current line width
-	
+
 	public double turningAngle;           // The turning angle used for + and - symbols
 	public boolean swapTurnDirs;          // Flag to swap + and - actions
-	
+
 	public double angleScale;             // Multiplicative scaling factor for the angle
 	public double angleShift;             // Additive increment for the angle
-	
+
 	public double lineLengthScale;        // Multiplicative scaling factor for the line length
 	public double lineLengthShift;        // Additive increment for the line length
-	
+
 	public double lineWidthScale;         // Multiplicative scaling factor for the line width
 	public double lineWidthShift;         // Additive increment for the line width
-	
+
 	public TurtleState previousState;
 
 	public Circle circle;
@@ -157,7 +157,7 @@ public class TurtleState {
 		this.lineLengthShift = other.lineLengthShift;
 		this.lineWidthScale = other.lineWidthScale;
 		this.lineWidthShift = other.lineWidthShift;
-		this.previousState = other.previousState;	
+		this.previousState = other.previousState;
 		this.lineSegment = new LineSegment(other.lineSegment);
 		this.circle = new Circle(other.circle);
 	}
@@ -178,7 +178,7 @@ public class TurtleState {
 			lineSegment.drawWithPaint(g, worldViewer);
 		}
 	}
-	
+
 	public void rotate(double rotation) {
 		angle += rotation;
 		angle = (angle + 360.0) % 360.0;
@@ -187,13 +187,13 @@ public class TurtleState {
 	public void swapDirection() {
 		swapTurnDirs = !swapTurnDirs;
 	}
-	
+
 	public void drawDot(Graphics g, WorldViewer worldViewer) {
 		circle.setCenter(x, y);
 		circle.setRadius(lineWidth);
 		circle.draw(g, worldViewer);
 	}
-	
+
 	protected void push() {
 		this.previousState = new TurtleState(this);
 	}
@@ -213,11 +213,11 @@ public class TurtleState {
 		this.lineLengthShift = prev.lineLengthShift;
 		this.lineWidthScale = prev.lineWidthScale;
 		this.lineWidthShift = prev.lineWidthShift;
-		this.previousState = prev.previousState;	
+		this.previousState = prev.previousState;
 		this.lineSegment = new LineSegment(prev.lineSegment);
 		this.circle = new Circle(prev.circle);
 	}
-	
+
 	public void scaleTurningAngle(double factor) {
 		turningAngle *= factor;
 		turningAngle = (turningAngle % 360.0 + 360.0) % 360.0;
@@ -235,7 +235,7 @@ public class TurtleState {
 	public void shiftLineLength(double amount) {
 		lineLength += amount;
 	}
-	
+
 	public void scaleLineWidth(double factor) {
 		lineWidth *= factor;
 	}

@@ -32,7 +32,7 @@ public class BoundingBox implements Drawable, Comparable<BoundingBox> {
 		this.maxX = Math.max(minX, maxX);
 		this.maxY = Math.max(minY, maxY);
 	}
-	
+
 	public double getMinX() { return minX; }
 	public double getMinY() { return minY; }
 	public double getMaxX() { return maxX; }
@@ -49,7 +49,7 @@ public class BoundingBox implements Drawable, Comparable<BoundingBox> {
 	public Point getCenter() {
 		return new Point((minX + maxX) / 2.0, (minY + maxY) / 2.0);
 	}
-	
+
 	public BoundingBox include(Point p) {
 		include(p.getX(), p.getY());
 		return this;
@@ -83,7 +83,7 @@ public class BoundingBox implements Drawable, Comparable<BoundingBox> {
 		);
 		return this.intersects(screenToWorldBoudingBox);
 	}
-	
+
 	public void draw(Graphics g) {
 
 	}
@@ -137,7 +137,7 @@ public class BoundingBox implements Drawable, Comparable<BoundingBox> {
 
 
 	public String toString() {
-		return "BoundingBox[min=(" + minX + ", " + minY + 
+		return "BoundingBox[min=(" + minX + ", " + minY +
 			"), max=(" + maxX + ", " + maxY + ")]";
 	}
 }

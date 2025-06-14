@@ -8,7 +8,7 @@ import java.awt.Color;
 public abstract class BaseColors {
 	protected static final Map<String, Color> nameToColor = new HashMap<>();
 	protected static final Map<Integer, String> colorToName = new HashMap<>();
-	
+
 	protected static void registerColor(String name, Color color) {
 		if (name == null || color == null) {
 			throw new IllegalArgumentException("Color name and color must not be null");

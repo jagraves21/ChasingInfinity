@@ -12,10 +12,10 @@ public abstract class AbstractShape<T extends AbstractShape<T>> implements Trans
 
 	public abstract T toScreen(WorldViewer worldViewer);
 	public abstract T toWorld(WorldViewer worldViewer);
-	
+
 	protected abstract void drawWithPaint(Graphics g);
 	protected abstract void drawWithPaint(Graphics g, WorldViewer worldViewer);
-	
+
 	public void draw(Graphics g) {
 		Graphics2D  g2d = (Graphics2D) g;
 		Paint previousPaint = null;

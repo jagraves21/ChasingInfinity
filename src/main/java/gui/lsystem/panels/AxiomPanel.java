@@ -26,7 +26,7 @@ public class AxiomPanel extends JPanel {
 		setTitledBorder("Axiom");
 		layoutComponents();
 	}
-	
+
 	protected void setTitledBorder(String title) {
 		JLabel sampleLabel = new JLabel();
 		Font labelFont = sampleLabel.getFont();
@@ -37,7 +37,7 @@ public class AxiomPanel extends JPanel {
 
 		setBorder(border);
 	}
-	
+
 	protected void initializeComponents() {
 		axiomField = new JTextField(TEXT_COLUMNS);
 	}

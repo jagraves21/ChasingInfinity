@@ -15,7 +15,7 @@ import java.awt.Paint;
 
 public class LineSegment extends AbstractShape<LineSegment>
 	implements CompositeTransformable<LineSegment> {
-	
+
 	public static final double EPSILON = 1e-10;
 
 	protected Point start;
@@ -30,7 +30,7 @@ public class LineSegment extends AbstractShape<LineSegment>
 	public LineSegment(double x1, double y1, double x2, double y2, Paint paint) {
 		this(x1, y1, x2, y2, paint, false);
 	}
-	
+
 	public LineSegment(double x1, double y1, double x2, double y2, Paint paint, boolean drawEndpoints) {
 		this(
 			new Point(x1, y1, paint),
@@ -44,15 +44,15 @@ public class LineSegment extends AbstractShape<LineSegment>
 	public LineSegment(Point start, Point end) {
 		this(start, end, NamedColors.WHITE);
 	}
-	
+
 	public LineSegment(Point start, Point end, Paint paint) {
 		this(start, end, paint, false);
 	}
-	
+
 	public LineSegment(Point start, Point end, Paint paint, boolean drawEndpoints) {
 		this(start, end, paint, drawEndpoints, true);
 	}
-	
+
 	protected LineSegment(Point start, Point end, Paint paint, boolean drawEndpoints, boolean copy) {
 		if (copy) {
 			this.start = new Point(start);
@@ -69,7 +69,7 @@ public class LineSegment extends AbstractShape<LineSegment>
 	public LineSegment(LineSegment other) {
 		this(other.start, other.end, other.paint, other.drawEndpoints, true);
 	}
-	
+
 	public Point getStart() { return start; }
 	public Point getEnd() { return end; }
 	public Paint getPaint() { return paint; }
@@ -124,7 +124,7 @@ public class LineSegment extends AbstractShape<LineSegment>
 		/*double val = (q.getY() - p.getY()) * (r.getX() - q.getX()) -
 			(q.getX() - p.getX()) * (r.getY() - q.getY());*/
 		double val = q.cross(p,r);
-		
+
 		if (Math.abs(val) < EPSILON) return 0;
 		return (val > 0) ? 1 : 2;
 	}
@@ -148,7 +148,7 @@ public class LineSegment extends AbstractShape<LineSegment>
 
 	public LineSegment toWorld(WorldViewer worldViewer) {
 		return new LineSegment(
-			start.toWorld(worldViewer),	
+			start.toWorld(worldViewer),
 			end.toWorld(worldViewer),
 			paint,
 			drawEndpoints,
@@ -169,13 +169,13 @@ public class LineSegment extends AbstractShape<LineSegment>
 		LineSegment bottomEdge = new LineSegment(0, height, width, height);
 		LineSegment leftEdge = new LineSegment(0, 0, 0, height);
 		LineSegment rightEdge = new LineSegment(width, 0, width, height);
-		
+
 		return screenSegment.intersects(topEdge) ||
 			screenSegment.intersects(bottomEdge) ||
 			screenSegment.intersects(leftEdge) ||
 			screenSegment.intersects(rightEdge);
 	}
-	
+
 	public void drawWithPaint(Graphics g) {
 		if (drawEndpoints) {
 			start.draw(g);
@@ -188,7 +188,7 @@ public class LineSegment extends AbstractShape<LineSegment>
 		int endY = (int) Math.round(end.getY());
 		g.drawLine(startX, startY, endX, endY);
 	}
-	
+
 	public void drawWithPaint(Graphics g, WorldViewer worldViewer) {
 		this.toScreen(worldViewer).drawWithPaint(g);
 	}
@@ -196,7 +196,7 @@ public class LineSegment extends AbstractShape<LineSegment>
 	public LineSegment self() {
 		return this;
 	}
-	
+
 	public Iterator<Transformable> iterator() {
 		List<Transformable> points = Arrays.asList(start, end);
 		return points.iterator();
@@ -209,7 +209,7 @@ public class LineSegment extends AbstractShape<LineSegment>
 		LineSegment other = (LineSegment) obj;
 		return this.start.equals(other.start) && this.end.equals(other.end);
 	}
-	
+
 	public int compareTo(LineSegment other) {
 		int cmp = this.start.compareTo(other.start);
 		if (cmp != 0) return cmp;

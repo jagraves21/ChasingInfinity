@@ -37,7 +37,7 @@ public class PaletteViewer {
 				int width = getWidth();
 				int height = getHeight();
 				int topHeight = height / 2;
-				
+
 				int[] xPositions = new int[colors.length + 1];
 				for (int ii = 0; ii <= colors.length; ii++) {
 					xPositions[ii] = Math.round(ii * (width / (float) colors.length));
@@ -81,7 +81,7 @@ public class PaletteViewer {
 		tabbedPane.setPreferredSize(new Dimension(800, 600));
 		return tabbedPane;
 	}
-	
+
 	protected static void createAndShowGUI(Map<String, Color[]> colorPalettes) {
 		final JFrame frame = new JFrame("Color Viewer");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -104,7 +104,7 @@ public class PaletteViewer {
 
 		frame.setVisible(true);
 	}
-	
+
 	public static void main(String[] args) {
 		Map<String, Color[]> colorPalettes = new TreeMap<>(
 			NamedPalettes.getNameToPaletteMap()

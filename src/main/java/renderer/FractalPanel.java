@@ -20,11 +20,11 @@ public class FractalPanel extends AnimationPanel {
 
 	protected WorldViewer worldViewer;
 	protected final List<Drawable> drawables = new CopyOnWriteArrayList<>();
-	
+
 	public FractalPanel() {
 		this(DEFAULT_FPS);
 	}
-	
+
 	public FractalPanel(int fps) {
 		this(DEFAULT_WIDTH, DEFAULT_HEIGHT, fps);
 	}
@@ -32,7 +32,7 @@ public class FractalPanel extends AnimationPanel {
 	public FractalPanel(int width, int height) {
 		this(width, height, DEFAULT_FPS);
 	}
-	
+
 	public FractalPanel(int width, int height, int fps) {
 		this(width, height, fps, DEFAULT_UPS);
 	}
@@ -59,7 +59,7 @@ public class FractalPanel extends AnimationPanel {
 			}
 		});
 	}
-	
+
 	public void moveViewTo(double x, double y) {
 		worldViewer.setViewCenter(x, y);
 	}
@@ -67,7 +67,7 @@ public class FractalPanel extends AnimationPanel {
 	public void recenter(int screenX, int screenY) {
 		worldViewer.recenter(screenX, screenY);
 	}
-	
+
 	public void setZoom(double zoom) {
 		worldViewer.setZoom(zoom);
 	}

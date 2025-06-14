@@ -13,7 +13,7 @@ public class ArgumentParser {
 	public int ups;
 	public boolean reflect;
 	public List<String> classes;
-	
+
 	public ArgumentParser(
 		String callerName,
 		int width,
@@ -54,7 +54,7 @@ public class ArgumentParser {
 		this.reflect = reflect;
 		this.classes = new LinkedList<String>();
 	}
-	
+
 	public void printHelp(boolean withClasses, boolean withReflect) {
 		if (withClasses) {
 			System.out.println("Usage: java " + callerName + " [options]");
@@ -76,8 +76,8 @@ public class ArgumentParser {
 
 	public void parseArguments(String[] args) {
 		this.parseArguments(args, false, false);
-	}	
-	
+	}
+
 	@SuppressWarnings("fallthrough")
 	public void parseArguments(String[] args, boolean withClasses, boolean withReflect) {
 		for (String arg : args) {

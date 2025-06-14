@@ -98,7 +98,7 @@ public class ColorMatcher {
 
 		return outerPanel;
 	}
-	
+
 	protected static void createAndShowGUI(Color queryColor, Map<String, Color> matchingColors) {
 		final JFrame frame = new JFrame("Color Matcher");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -153,7 +153,7 @@ public class ColorMatcher {
 			throw new IllegalArgumentException("Invalid hex digits: " + hex);
 		}
 	}
-	
+
 	public static Color parseColorFromArgs(String[] args) {
 		if (args == null || (args.length != 1 && args.length != 3)) {
 			throw new IllegalArgumentException("Usage: <r> <g> <b>  or  <hex>");

@@ -107,7 +107,7 @@ public class TurtleParametersPanel extends JPanel {
 			}
 		});
 	}
-	
+
 	protected void setDefaults() {
 		xField.setText(Double.toString(DEFAULT_X));
 		yField.setText(Double.toString(DEFAULT_Y));

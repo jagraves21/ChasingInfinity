@@ -50,7 +50,7 @@ public class ColorViewer {
 		map.put("GRAY", NamedColors.getColorByName("GRAY"));
 		BASE_COLORS = Collections.unmodifiableMap(map);
 	}
-	
+
 	public static String findClosestBaseColorName(Color target, Map<String, Color> baseColors) {
 		return baseColors.entrySet().stream()
 			.min(Comparator.comparingDouble(e -> ColorUtils.labColorDistance(target, e.getValue())))
@@ -135,7 +135,7 @@ public class ColorViewer {
 		tabbedPane.setPreferredSize(new Dimension(800, 600));
 		return tabbedPane;
 	}
-	
+
 	protected static void createAndShowGUI(Map<String, Map<String, Color>> colorGroups) {
 		final JFrame frame = new JFrame("Color Viewer");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -158,9 +158,9 @@ public class ColorViewer {
 
 		frame.setVisible(true);
 	}
-	
+
 	public static void main(String[] args) {
-		Map<String, Map<String, Color>> colorGroups = 
+		Map<String, Map<String, Color>> colorGroups =
 			groupColors(BASE_COLORS, NamedColors.getNameToColorMap());
 
 		SwingUtilities.invokeLater(() -> {

@@ -49,7 +49,7 @@ public class GoldenDragon extends AbstractGeometricFractal<GoldenDragon> {
 	public GoldenDragon(int iterations, boolean reset) {
 		super(iterations, reset);
 	}
-		
+
 	public static int getSuggestedIterations() {
 		return 18;
 	}

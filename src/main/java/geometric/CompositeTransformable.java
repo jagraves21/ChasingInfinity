@@ -77,7 +77,7 @@ public interface CompositeTransformable<T extends CompositeTransformable<T>>
 		}
 		return self();
 	}
-	
+
 	/*default BoundingBox getBoundingBox() {
 		Spliterator<Transformable> spliterator = this.spliterator();
 		// false for sequential stream, true for parallel stream

@@ -24,7 +24,7 @@ public abstract class AbstractLSystemFractal extends AbstractFractal {
 	protected String currentSequence;
 	protected Map<Character,String> productionRules;
 	protected TurtleState initialTurtle;
-	
+
 	public AbstractLSystemFractal(int maxIterations, boolean reset, TurtleState initialTurtle) {
 		super();
 		this.maxIterations = maxIterations;
@@ -32,11 +32,11 @@ public abstract class AbstractLSystemFractal extends AbstractFractal {
 		this.initialTurtle = new TurtleState(initialTurtle);
 		this.curIteration = 0;
 	}
-	
+
 	public static int getSuggestedIterations() {
 		return 5;
 	}
-	
+
 	public static TurtleState getInitialTurtleState() {
 		return new TurtleState.Builder().build();
 	}
@@ -66,7 +66,7 @@ public abstract class AbstractLSystemFractal extends AbstractFractal {
 	}
 
 	public abstract String getAxiom();
-	
+
 	public void addRule(char predecessor, String successor) {
 		productionRules.put(predecessor, successor);
 	}
@@ -148,7 +148,7 @@ public abstract class AbstractLSystemFractal extends AbstractFractal {
 			if (symbol == '#') {
 				paint = getPaint(worldViewer);
 				if(paint != null) g2d.setPaint(paint);
-			}	
+			}
 			turtle.updateState(symbol, g2d, worldViewer);
 		}
 		g2d.dispose();
@@ -168,7 +168,7 @@ public abstract class AbstractLSystemFractal extends AbstractFractal {
 
 		Paint paint = getPaint(worldViewer);
 		if(paint != null) g2d.setPaint(paint);
-		
+
 		TurtleState turtle = new TurtleState(initialTurtle);
 		for (int ii = 0; ii < currentSequence.length(); ii++) {
 			char symbol = currentSequence.charAt(ii);
@@ -187,7 +187,7 @@ public abstract class AbstractLSystemFractal extends AbstractFractal {
 		try {
 			String callerClassName = Thread.currentThread().getStackTrace()[2].getClassName();
 			Class<?> callerClass = Class.forName(callerClassName);
-			
+
 			Method getSuggestedIterations = callerClass.getMethod("getSuggestedIterations");
 			Method getSuggestedFPS = callerClass.getMethod("getSuggestedFPS");
 			Method getSuggestedUPS = callerClass.getMethod("getSuggestedUPS");
@@ -201,7 +201,7 @@ public abstract class AbstractLSystemFractal extends AbstractFractal {
 				(int) getSuggestedUPS.invoke(null)
 			);
 			argumentParser.parseArguments(args);
-			
+
 			Object instance = callerClass.getConstructor(
 				int.class, boolean.class
 			).newInstance(argumentParser.iterations, argumentParser.reset);

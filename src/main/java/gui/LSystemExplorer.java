@@ -176,7 +176,7 @@ public class LSystemExplorer extends JFrame {
 			}
 		}.execute();
 	}
-	
+
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(() -> {
 			LSystemExplorer gui = new LSystemExplorer();

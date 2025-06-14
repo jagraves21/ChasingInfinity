@@ -14,7 +14,7 @@ public class WorldViewer implements Comparable<WorldViewer> {
 
 	protected double screenCenterX;
 	protected double screenCenterY;
-	
+
 	public WorldViewer(int screenWidth, int screenHeight, double viewCenterX, double viewCenterY, double zoom) {
 		this(screenWidth, screenHeight, viewCenterX, viewCenterY, zoom, true);
 	}
@@ -44,7 +44,7 @@ public class WorldViewer implements Comparable<WorldViewer> {
 		this.screenCenterX = screenWidth / 2.0;
 		this.screenCenterY = screenHeight / 2.0;
 	}
-	
+
 	public int getScreenWidth() { return screenWidth; }
 	public int getScreenHeight() { return screenHeight; }
 	public double getViewCenterX() { return viewCenterX; }
@@ -79,7 +79,7 @@ public class WorldViewer implements Comparable<WorldViewer> {
 
 	public void setViewCenterX(double viewCenterX) { this.viewCenterX = viewCenterX; }
 	public void setViewCenterY(double viewCenterY) { this.viewCenterY = viewCenterY; }
-	
+
 	public void setViewCenter(double viewCenterX, double viewCenterY) {
 		this.viewCenterX = viewCenterX;
 		this.viewCenterY = viewCenterY;
@@ -103,7 +103,7 @@ public class WorldViewer implements Comparable<WorldViewer> {
 		if (factor == 0.0) {
 			throw new IllegalArgumentException("Zoom factor cannot be zero.");
 		}
-		
+
 		double newZoom = this.zoom * factor;
 		this.viewCenterX = worldX - (worldX - viewCenterX) * (this.zoom / newZoom);
 		this.viewCenterY = worldY - (worldY - viewCenterY) * (this.zoom / newZoom);
@@ -142,8 +142,8 @@ public class WorldViewer implements Comparable<WorldViewer> {
 		transform.scale(zoom, flipY ? -zoom : zoom);
 		transform.translate(-viewCenterX, -viewCenterY);
 		return transform;
-	}	
-	
+	}
+
 	public AffineTransform getWorldToScreenTransform(AffineTransform existingTransform) {
 		AffineTransform transform = getWorldToScreenTransform();
 		existingTransform = new AffineTransform(existingTransform);
@@ -187,7 +187,7 @@ public class WorldViewer implements Comparable<WorldViewer> {
 	public int hashCode() {
 		return Objects.hash(screenWidth, screenHeight, viewCenterX, viewCenterY, zoom, flipY);
 	}
-	
+
 	public String toString() {
 		//return String.format("Point{x=%.2f, y=%.2f, paint=%s}", x, y, paint);
 		StringBuilder stringBuilder = new StringBuilder();

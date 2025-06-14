@@ -14,13 +14,13 @@ import java.awt.Paint;
 
 import java.awt.geom.AffineTransform;
 
-public abstract class AbstractGeometricFractal<T extends AbstractGeometricFractal<T>> 
+public abstract class AbstractGeometricFractal<T extends AbstractGeometricFractal<T>>
 	extends AbstractFractal implements CompositeTransformable<T> {
 
 	protected int curIteration;
 	protected int maxIterations;
 	boolean reset;
-	
+
 	public AbstractGeometricFractal(int maxIterations, boolean reset) {
 		super();
 		this.maxIterations = maxIterations;
@@ -35,11 +35,11 @@ public abstract class AbstractGeometricFractal<T extends AbstractGeometricFracta
 	public int getMaxIterations() {
 		return maxIterations;
 	}
-	
+
 	public boolean getReset() {
 		return reset;
 	}
-	
+
 	public void setMaxIterations(int maxIterations) {
 		this.maxIterations = maxIterations;
 	}
@@ -126,7 +126,7 @@ public abstract class AbstractGeometricFractal<T extends AbstractGeometricFracta
 		try {
 			String callerClassName = Thread.currentThread().getStackTrace()[2].getClassName();
 			Class<?> callerClass = Class.forName(callerClassName);
-			
+
 			Method getSuggestedIterations = callerClass.getMethod("getSuggestedIterations");
 			Method getSuggestedFPS = callerClass.getMethod("getSuggestedFPS");
 			Method getSuggestedUPS = callerClass.getMethod("getSuggestedUPS");
@@ -140,7 +140,7 @@ public abstract class AbstractGeometricFractal<T extends AbstractGeometricFracta
 				(int) getSuggestedUPS.invoke(null)
 			);
 			argumentParser.parseArguments(args);
-			
+
 			Object instance = callerClass.getConstructor(
 				int.class, boolean.class
 			).newInstance(argumentParser.iterations, argumentParser.reset);

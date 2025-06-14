@@ -34,7 +34,7 @@ public class GoldenDragon2 extends GoldenDragon {
 	public GoldenDragon2(int iterations, boolean reset) {
 		super(iterations, reset);
 	}
-		
+
 	protected void init() {
 		super.init();
 

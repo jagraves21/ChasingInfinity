@@ -11,7 +11,7 @@ public class Polygon extends BasePolygon<Polygon> {
 	public Polygon(Point[] vertices) {
 		this(vertices, NamedColors.WHITE);
 	}
-	
+
 	public Polygon(Point[] vertices, Paint paint) {
 		this(vertices, paint, false);
 	}
@@ -19,7 +19,7 @@ public class Polygon extends BasePolygon<Polygon> {
 	public Polygon(Point[] vertices, Paint paint, boolean fill) {
 		this(Arrays.asList(vertices), paint, fill, true);
 	}
-	
+
 	public Polygon(List<Point> vertices) {
 		this(vertices, NamedColors.WHITE);
 	}
@@ -27,19 +27,19 @@ public class Polygon extends BasePolygon<Polygon> {
 	public Polygon(List<Point> vertices, Paint paint) {
 		this(vertices, paint, false);
 	}
-	
+
 	public Polygon(List<Point> vertices, Paint paint, boolean fill) {
 		this(vertices, paint, fill, true);
 	}
-	
+
 	protected Polygon(List<Point> vertices, Paint paint, boolean fill, boolean deepCopy) {
 		super(vertices, paint, fill, deepCopy);
 	}
-	
+
 	public Polygon(Polygon other) {
 		this(other.vertices, other.paint, other.fill, true);
 	}
-	
+
 	protected BasePolygon<Polygon> createCopy(
 		List<Point> vertices, Paint paint, boolean fill, boolean deepCopy
 	) {

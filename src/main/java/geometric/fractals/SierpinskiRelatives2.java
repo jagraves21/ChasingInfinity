@@ -35,7 +35,7 @@ public class SierpinskiRelatives2 extends SierpinskiRelatives {
 	public SierpinskiRelatives2(int iterations, boolean reset) {
 		super(iterations, reset);
 	}
-	
+
 	protected Polygon translateTopLeft(Polygon square, Point[] points) {
 		return super.translateTopLeft(
 			square, rotate(points, 1)

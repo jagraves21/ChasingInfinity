@@ -10,13 +10,13 @@ import java.util.Arrays;
 
 public class Triangle extends BasePolygon<Triangle> {
 	public Triangle(Point p1, Point p2, Point p3) {
-		this(p1, p2, p3, NamedColors.WHITE);	
+		this(p1, p2, p3, NamedColors.WHITE);
 	}
 
 	public Triangle(Point p1, Point p2, Point p3, Paint paint) {
 		this(p1, p2, p3, paint, false);
 	}
-	
+
 	public Triangle(Point p1, Point p2, Point p3, Paint paint, boolean fill) {
 		this(
 			Arrays.asList(p1, p2, p3),
@@ -29,7 +29,7 @@ public class Triangle extends BasePolygon<Triangle> {
 	public Triangle(Point[] vertices) {
 		this(vertices, NamedColors.WHITE);
 	}
-	
+
 	public Triangle(Point[] vertices, Paint paint) {
 		this(vertices, NamedColors.WHITE, false);
 	}
@@ -37,7 +37,7 @@ public class Triangle extends BasePolygon<Triangle> {
 	public Triangle(Point[] vertices, Paint paint, boolean fill) {
 		this(Arrays.asList(vertices), paint, fill, true);
 	}
-	
+
 	public Triangle(List<Point> vertices) {
 		this(vertices, NamedColors.WHITE);
 	}
@@ -45,7 +45,7 @@ public class Triangle extends BasePolygon<Triangle> {
 	public Triangle(List<Point> vertices, Paint paint) {
 		this(vertices, NamedColors.WHITE, false);
 	}
-	
+
 	public Triangle(List<Point> vertices, Paint paint, boolean fill) {
 		this(vertices, paint, fill, true);
 	}
@@ -56,11 +56,11 @@ public class Triangle extends BasePolygon<Triangle> {
 			throw new IllegalArgumentException("A triangle must have 3 vertices.");
 		}
 	}
-	
+
 	public Triangle(Triangle other) {
 		this(other.vertices, other.paint, other.fill, true);
 	}
-	
+
 	protected BasePolygon<Triangle> createCopy(
 		List<Point> vertices, Paint paint, boolean fill, boolean deepCopy
 	) {
@@ -92,7 +92,7 @@ public class Triangle extends BasePolygon<Triangle> {
 			(p1.getY() + p2.getY() + p3.getY()) / 3
 		);
 	}
-	
+
 	public String toString() {
 		return String.format(
 			"Triangle{vertices=%s, paint=%s, fill=%b}", vertices, paint, fill

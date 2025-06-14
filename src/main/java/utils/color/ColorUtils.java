@@ -86,7 +86,7 @@ public class ColorUtils {
 	public static double clamp(double value) {
 		return Math.max(0.0, Math.min(1.0, value));
 	}
-	
+
 	public static Color average(Color c1, Color c2) {
 		return blend(c1, c2);
 	}

@@ -56,7 +56,7 @@ public class ProductionRulesPanel extends JPanel {
 			ruleKeyFields[ii] = new SingleCharValidatedTextField(RULE_KEY_COLUMNS);
 			ruleKeyFields[ii].setToolTipText("Predecessor");
 			ruleKeyFields[ii].setFont(monoFont);
-			
+
 			ruleValueFields[ii] = new JTextField(RULE_VALUE_COLUMNS);
 			ruleValueFields[ii].setToolTipText("Successor");
 			ruleValueFields[ii].setFont(monoFont);
@@ -121,7 +121,7 @@ public class ProductionRulesPanel extends JPanel {
 	public JTextField[] getRuleValueFields() {
 		return ruleValueFields;
 	}
-	
+
 	public Map<Character, String> getProductionRules() {
 		Map<Character, String> rules = new HashMap<>();
 		for (int ii = 0; ii < MAX_RULES; ii++) {

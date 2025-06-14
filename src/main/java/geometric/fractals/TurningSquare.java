@@ -88,10 +88,10 @@ public class TurningSquare extends AbstractGeometricFractal<TurningSquare> {
 		Point p4 = new Point(p1).translate(0, -length);
 
 		seedSquare = new Polygon(new Point[] {p1,p2,p3,p4}, null, false);
-	
+
 		center = p1.getMidpoint(p3);
 		pointOnCircle = new Point(p2);
-		
+
 		currentSquare = seedSquare;
 		fractalComponents = new LinkedList<>();
 		fractalComponents.add(seedSquare);

@@ -18,7 +18,7 @@ public abstract class AnimationPanel extends Canvas implements Runnable {
 	public AnimationPanel() {
 		this(60);
 	}
-	
+
 	public AnimationPanel(int fps) {
 		this(800, 600, fps);
 	}
@@ -26,7 +26,7 @@ public abstract class AnimationPanel extends Canvas implements Runnable {
 	public AnimationPanel(int width, int height) {
 		this(width, height, 60);
 	}
-	
+
 	public AnimationPanel(int width, int height, int fps) {
 		this(width, height, 60, 30);
 	}
