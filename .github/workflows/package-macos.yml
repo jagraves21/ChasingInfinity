@@ -1,0 +1,45 @@
+name: Package macOS Apps
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    uses: ./.github/workflows/build.yml
+
+  package:
+    needs: build
+    runs-on: macos-latest
+
+    steps:
+      - name: Download JAR Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: jar-files
+      
+	  - name: Package GeometricFractalsApp for macOS
+        run: |
+          jpackage \
+            --input . \
+            --name GeometricFractalsApp \
+            --main-jar GeometricFractalsApp.jar \
+            --main-class gui.GeometricFractalsApp \
+            --type dmg \
+            --app-version 1.0.0
+
+      - name: Package LSystemFractalsApp for macOS
+        run: |
+          jpackage \
+            --input . \
+            --name LSystemFractalsApp \
+            --main-jar LSystemFractalsApp.jar \
+            --main-class gui.LSystemFractalsApp \
+            --type dmg \
+            --app-version 1.0.0
+
+      - name: Upload macOS DMG files
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-dmg-files
+          path: '*.dmg'
+
