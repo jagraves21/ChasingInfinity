@@ -16,6 +16,9 @@ jobs:
           distribution: temurin
           java-version: '17'
 
+      - name: Check jpackage minimum macOS version
+        run: otool -l $(which jpackage) | grep -A 3 LC_VERSION_MIN_MACOSX
+
       - name: Download JAR Artifacts
         uses: actions/download-artifact@v4
         with:
@@ -28,6 +31,8 @@ jobs:
           cp GeometricFractalsApp.jar geometric-input/
 
       - name: Package GeometricFractalsApp for macOS
+        env:
+          MACOSX_DEPLOYMENT_TARGET: 10.15
         run: |
           jpackage \
             --input geometric-input \
@@ -44,6 +49,8 @@ jobs:
           cp LSystemFractalsApp.jar lsystem-input/
 
       - name: Package LSystemFractalsApp for macOS
+        env:
+          MACOSX_DEPLOYMENT_TARGET: 10.15
         run: |
           jpackage \
             --input lsystem-input \
