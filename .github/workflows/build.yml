@@ -1,9 +1,7 @@
 name: Build JARs on Push and Release
 
 on:
-  push:        # Trigger on any push to any branch
-  release:     # Also trigger on GitHub Releases
-    types: [published]
+  workflow_dispatch:
 
 jobs:
   build:
