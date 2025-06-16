@@ -23,6 +23,12 @@ jobs:
             --type dmg \
             --app-version 1.0.0
 
+      - name: Patch GeometricFractalsApp Info.plist to set minimum macOS version
+        run: |
+          APP_PATH="GeometricFractalsApp.app"
+          /usr/libexec/PlistBuddy -c "Add :LSMinimumSystemVersion string 10.15" "$APP_PATH/Contents/Info.plist" || \
+          /usr/libexec/PlistBuddy -c "Set :LSMinimumSystemVersion 10.15" "$APP_PATH/Contents/Info.plist"
+
       - name: Package LSystemFractalsApp for macOS
         run: |
           jpackage \
@@ -32,6 +38,12 @@ jobs:
             --main-class gui.LSystemFractalsApp \
             --type dmg \
             --app-version 1.0.0
+
+      - name: Patch LSystemFractalsApp Info.plist to Set Minimum macOS Version
+        run: |
+          APP_PATH="LSystemFractalsApp.app"
+          /usr/libexec/PlistBuddy -c "Add :LSMinimumSystemVersion string 10.15" "$APP_PATH/Contents/Info.plist" || \
+          /usr/libexec/PlistBuddy -c "Set :LSMinimumSystemVersion 10.15" "$APP_PATH/Contents/Info.plist"
 
       - name: Upload macOS DMG Files
         uses: actions/upload-artifact@v4
