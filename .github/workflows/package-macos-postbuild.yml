@@ -31,8 +31,6 @@ jobs:
           cp GeometricFractalsApp.jar geometric-input/
 
       - name: Package GeometricFractalsApp for macOS
-        env:
-          MACOSX_DEPLOYMENT_TARGET: 10.15
         run: |
           jpackage \
             --input geometric-input \
@@ -49,8 +47,6 @@ jobs:
           cp LSystemFractalsApp.jar lsystem-input/
 
       - name: Package LSystemFractalsApp for macOS
-        env:
-          MACOSX_DEPLOYMENT_TARGET: 10.15
         run: |
           jpackage \
             --input lsystem-input \
