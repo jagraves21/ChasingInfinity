@@ -16,8 +16,8 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: jar-files
-      
-	  - name: Package GeometricFractalsApp for macOS
+
+      - name: Package GeometricFractalsApp for macOS
         run: |
           jpackage \
             --input . \
@@ -37,7 +37,7 @@ jobs:
             --type dmg \
             --app-version 1.0.0
 
-      - name: Upload macOS DMG files
+      - name: Upload macOS DMG Files
         uses: actions/upload-artifact@v4
         with:
           name: macos-dmg-files
