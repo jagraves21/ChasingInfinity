@@ -2,11 +2,13 @@ package geometric;
 
 import utils.color.NamedColors;
 
-import java.awt.Color;
-import java.awt.Paint;
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+
+import java.awt.Color;
+import java.awt.Paint;
 
 public class Triangle extends BasePolygon<Triangle> {
 	public Triangle(Point p1, Point p2, Point p3) {
@@ -93,10 +95,65 @@ public class Triangle extends BasePolygon<Triangle> {
 		);
 	}
 
+	public Circle incircle() {
+		Iterator<Point> iter = getVertices().iterator();
+		Point A = iter.next();
+		Point B = iter.next();
+		Point C = iter.next();
+
+		double a = B.distance(C);
+		double b = A.distance(C);
+		double c = A.distance(B);
+
+		double perimeter = a + b + c;
+		double x = (a * A.getX() + b * B.getX() + c * C.getX()) / perimeter;
+		double y = (a * A.getY() + b * B.getY() + c * C.getY()) / perimeter;
+		Point incenter = new Point(x, y);
+
+		double semiPerimeter = perimeter / 2.0;
+		double area = area();
+		double inradius = area / semiPerimeter;
+
+		return new Circle(incenter, inradius, getPaint());
+	}
+
+	public Circle circumcircle() {
+		Iterator<Point> iter = getVertices().iterator();
+		Point A = iter.next();
+		Point B = iter.next();
+		Point C = iter.next();
+
+		double x1 = A.getX(), y1 = A.getY();
+		double x2 = B.getX(), y2 = B.getY();
+		double x3 = C.getX(), y3 = C.getY();
+
+		double d = 4 * signedArea();
+
+		if (Math.abs(d) < 1e-10) {
+			throw new ArithmeticException("Degenerate triangle: cannot compute circumcircle.");
+		}
+
+		double x1Sq = A.dot(A);
+		double x2Sq = B.dot(B);
+		double x3Sq = C.dot(C);
+
+		double ux = (x1Sq * (y2 - y3) +
+			x2Sq * (y3 - y1) +
+			x3Sq * (y1 - y2)) / d;
+
+		double uy = (x1Sq * (x3 - x2) +
+			x2Sq * (x1 - x3) +
+			x3Sq * (x2 - x1)) / d;
+
+		Point circumcenter = new Point(ux, uy);
+		double radius = circumcenter.distance(A);
+		return new Circle(circumcenter, radius, getPaint());
+	}
+
 	public String toString() {
 		return String.format(
 			"Triangle{vertices=%s, paint=%s, fill=%b}", vertices, paint, fill
-        );
-    }
+		);
+	}
 }
 
