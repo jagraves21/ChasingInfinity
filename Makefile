@@ -7,7 +7,7 @@ DIST_DIR := ./dist
 # --- java toolchain ---
 JAVAC := javac -Xlint -Werror --release 8
 JAVA := java
-CLASSPATH := $(BIN_DIR):$(RES_DIR)
+CLASSPATH := $(BIN_DIR)
 SOURCES := $(shell find $(SRC_DIR) -name "*.java")
 CLASSES := $(SOURCES:$(SRC_DIR)/%.java=$(BIN_DIR)/%.class)
 
@@ -54,11 +54,11 @@ jar: $(GEOMETRIC_JAR) $(LSYSTEM_JAR)
 
 $(GEOMETRIC_JAR): $(CLASSES)
 	@mkdir -p $(DIST_DIR)
-	jar cfe $@ $(GEOMETRIC_MAIN_CLASS) -C $(BIN_DIR) . -C $(RES_DIR) .
+	jar cfe $@ $(GEOMETRIC_MAIN_CLASS) -C $(BIN_DIR) .
 
 $(LSYSTEM_JAR): $(CLASSES)
 	@mkdir -p $(DIST_DIR)
-	jar cfe $@ $(LSYSTEM_MAIN_CLASS) -C $(BIN_DIR) . -C $(RES_DIR) .
+	jar cfe $@ $(LSYSTEM_MAIN_CLASS) -C $(BIN_DIR) .
 
 
 

@@ -20,12 +20,12 @@ public class LSystemFractalsApp {
 	public static final String TITLE = "L-System Fractals";
 
 	public static final String[] ICON_FILENAMES = {
-		"/geometric_256.png",
-		"/geometric_128.png",
-		"/geometric_64.png",
-		"/geometric_48.png",
-		"/geometric_32.png",
-		"/geometric_16.png"
+		"/icons/geometric_256.png",
+		"/icons/geometric_128.png",
+		"/icons/geometric_64.png",
+		"/icons/geometric_48.png",
+		"/icons/geometric_32.png",
+		"/icons/geometric_16.png"
 	};
 
 	protected static List<Image> getIcons() {
