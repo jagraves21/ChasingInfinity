@@ -1,4 +1,4 @@
-name: Build JARs on Push and Release
+name: Compile and Build JAR Files
 
 on:
   workflow_dispatch:
@@ -8,22 +8,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout Source Code
         uses: actions/checkout@v3
 
-      - name: Set up Java
+      - name: Set Up Java
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Compile Java source
+      - name: Compile Java Source Files
         run: make compile
 
-      - name: Build with Makefile
+      - name: Build JAR Files
         run: make jar
 
-      - name: Upload built JARs
+      - name: Upload JAR Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: jar-files
