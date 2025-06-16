@@ -12,13 +12,13 @@ SOURCES := $(shell find $(SRC_DIR) -name "*.java")
 CLASSES := $(SOURCES:$(SRC_DIR)/%.java=$(BIN_DIR)/%.class)
 
 # --- app packaging ---
-GEOMETRIC_MAIN_CLASS := gui.GeometricFractals
-GEOMETRIC_JAR := $(DIST_DIR)/GeometricFractals.jar
-GEOMETRIC_EXE := $(DIST_DIR)/GeometricFractals.exe
+GEOMETRIC_MAIN_CLASS := gui.GeometricFractalsApp
+GEOMETRIC_JAR := $(DIST_DIR)/GeometricFractalsApp.jar
+GEOMETRIC_EXE := $(DIST_DIR)/GeometricFractalsApp.exe
 
-LSYSTEM_MAIN_CLASS := gui.LSystemFractals
-LSYSTEM_JAR := $(DIST_DIR)/LSystemFractals.jar
-LSYSTEM_EXE := $(DIST_DIR)/LSystemFractals.exe
+LSYSTEM_MAIN_CLASS := gui.LSystemFractalsApp
+LSYSTEM_JAR := $(DIST_DIR)/LSystemFractalsApp.jar
+LSYSTEM_EXE := $(DIST_DIR)/LSystemFractalsApp.exe
 
 LAUNCH4J_CONFIG := launch4j-config.xml
 
@@ -30,16 +30,21 @@ JRE_DIR := $(DIST_DIR)/jre
 
 # --- compilation ---
 .PHONY: all
-all: $(CLASSES)
+all: $(CLASSES) copy-resources
 
 $(BIN_DIR)/%.class: $(SRC_DIR)/%.java
 	@mkdir -p $(dir $@)
-	$(JAVAC) -cp $(SRC_DIR):$(RES_DIR) -d $(BIN_DIR) $<
+	$(JAVAC) -cp $(SRC_DIR) -d $(BIN_DIR) $<
 
 .PHONY: compile
-compile:
+compile: copy-resources
 	@mkdir -p $(BIN_DIR)
-	$(JAVAC) -cp $(SRC_DIR):$(RES_DIR) -d $(BIN_DIR) $(SOURCES)
+	$(JAVAC) -cp $(SRC_DIR) -d $(BIN_DIR) $(SOURCES)
+
+.PHONY: copy-resources
+copy-resources:
+	@mkdir -p $(BIN_DIR)
+	@cp -r $(RES_DIR)/* $(BIN_DIR)/
 
 
 
