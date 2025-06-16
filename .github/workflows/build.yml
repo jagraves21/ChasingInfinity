@@ -1,0 +1,30 @@
+name: Build JARs on Push and Release
+
+on:
+  push:        # Trigger on any push to any branch
+  release:     # Also trigger on GitHub Releases
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Build with Makefile
+        run: make jar
+
+      - name: Upload built JARs
+        uses: actions/upload-artifact@v4
+        with:
+          name: jar-files
+          path: dist/*.jar
+
