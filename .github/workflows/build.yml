@@ -19,6 +19,9 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
+      - name: Compile Java source
+        run: make compile
+
       - name: Build with Makefile
         run: make jar
 
