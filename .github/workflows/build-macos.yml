@@ -1,0 +1,42 @@
+name: Build macOS App
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-macos:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set Up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Compile Java Source
+        run: make compile
+
+      - name: Build JAR files
+        run: make jar
+
+      - name: Package macOS App with jpackage
+        run: |
+          jpackage \
+            --input dist \
+            --name YourAppName \
+            --main-jar yourapp.jar \
+            --main-class com.example.Main \
+            --type dmg \
+            --icon path/to/app-icon.icns \
+            --app-version 1.0.0
+
+      - name: Upload macOS Package Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-app
+          path: '*.dmg'
+
