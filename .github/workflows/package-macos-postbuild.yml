@@ -17,7 +17,7 @@ jobs:
           java-version: '17'
 
       - name: Check jpackage minimum macOS version
-        run: otool -l $(which jpackage) | grep -A 3 LC_VERSION_MIN_MACOSX
+        run: otool -l $(which jpackage) 
 
       - name: Download JAR Artifacts
         uses: actions/download-artifact@v4
