@@ -10,25 +10,43 @@ jobs:
       MACOSX_DEPLOYMENT_TARGET: 10.15
 
     steps:
+      - name: Set up Java 17 with jpackage
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
       - name: Download JAR Artifacts
         uses: actions/download-artifact@v4
         with:
           name: jar-files
 
+      - name: Prepare Input Folder for GeometricFractalsApp
+        run: |
+          rm -rf geometric-input
+          mkdir geometric-input
+          cp GeometricFractalsApp.jar geometric-input/
+
       - name: Package GeometricFractalsApp for macOS
         run: |
           jpackage \
-            --input . \
+            --input geometric-input \
             --name GeometricFractalsApp \
             --main-jar GeometricFractalsApp.jar \
             --main-class gui.GeometricFractalsApp \
             --type dmg \
             --app-version 1.0.0
 
+      - name: Prepare Input Folder for LSystemFractalsApp
+        run: |
+          rm -rf lsystem-input
+          mkdir lsystem-input
+          cp LSystemFractalsApp.jar lsystem-input/
+
       - name: Package LSystemFractalsApp for macOS
         run: |
           jpackage \
-            --input . \
+            --input lsystem-input \
             --name LSystemFractalsApp \
             --main-jar LSystemFractalsApp.jar \
             --main-class gui.LSystemFractalsApp \

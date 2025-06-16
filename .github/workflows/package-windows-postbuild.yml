@@ -19,10 +19,17 @@ jobs:
         with:
           name: jar-files
 
+      - name: Prepare Input Folder for GeometricFractalsApp
+        run: |
+          if exist geometric-input rmdir /s /q geometric-input
+          mkdir geometric-input
+          copy GeometricFractalsApp.jar geometric-input
+        shell: cmd
+
       - name: Package GeometricFractalsApp for Windows
         run: |
           jpackage ^
-            --input . ^
+            --input geometric-input ^
             --name GeometricFractalsApp ^
             --main-jar GeometricFractalsApp.jar ^
             --main-class gui.GeometricFractalsApp ^
@@ -30,10 +37,17 @@ jobs:
             --app-version 1.0.0
         shell: cmd
 
+      - name: Prepare Input Folder for LSystemFractalsApp
+        run: |
+          if exist lsystem-input rmdir /s /q lsystem-input
+          mkdir lsystem-input
+          copy LSystemFractalsApp.jar lsystem-input
+        shell: cmd
+
       - name: Package LSystemFractalsApp for Windows
         run: |
           jpackage ^
-            --input . ^
+            --input lsystem-input ^
             --name LSystemFractalsApp ^
             --main-jar LSystemFractalsApp.jar ^
             --main-class gui.LSystemFractalsApp ^
