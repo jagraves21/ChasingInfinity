@@ -1,0 +1,13 @@
+name: Build and Package Windows Apps
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    uses: ./.github/workflows/build.yml
+
+  package_windows:
+    needs: build
+    uses: ./.github/workflows/package-windows-postbuild.yml
+

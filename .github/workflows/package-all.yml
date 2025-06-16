@@ -1,4 +1,4 @@
-name: Build and Package macOS Apps
+name: Build and Package All Platforms
 
 on:
   workflow_dispatch:
@@ -10,4 +10,8 @@ jobs:
   package_macos:
     needs: build
     uses: ./.github/workflows/package-macos-postbuild.yml
+
+  package_windows:
+    needs: build
+    uses: ./.github/workflows/package-windows-postbuild.yml
 
