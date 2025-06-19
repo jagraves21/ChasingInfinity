@@ -191,7 +191,7 @@ public class WorldViewer implements Comparable<WorldViewer> {
 	public String toString() {
 		//return String.format("Point{x=%.2f, y=%.2f, paint=%s}", x, y, paint);
 		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append("WorldViwer[");
+		stringBuilder.append("WorldViewer[");
 		stringBuilder.append(String.format("  screenWidth   %d\n", screenWidth));
 		stringBuilder.append(String.format("  screenHeight  %d\n", screenHeight));
 		stringBuilder.append(String.format("  viewCenterX   %.2f\n", viewCenterX));
