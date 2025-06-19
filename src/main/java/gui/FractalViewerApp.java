@@ -148,7 +148,7 @@ public class FractalViewerApp {
 
 		return comboBox;
 	}
-	
+
 	protected static void createAndShowGUI(
 		String title,
 		List<Supplier<AbstractFractal>> fractalSuppliers,
@@ -200,25 +200,25 @@ public class FractalViewerApp {
 
 		frame.setVisible(true);
 	}
-	
+
 	public static void startGUI(List<Supplier<AbstractFractal>> fractalSuppliers) {
 		startGUI(fractalSuppliers, DEFAULT_TITLE);
 	}
-	
+
 	protected static void startGUI(
 		List<Supplier<AbstractFractal>> fractalSuppliers,
 		String title
 	) {
 		startGUI(fractalSuppliers, title, new ArrayList<>());
 	}
-	
+
 	protected static void startGUI(
 		List<Supplier<AbstractFractal>> fractalSuppliers,
 		List<Image> icons
 	) {
 		startGUI(fractalSuppliers, DEFAULT_TITLE, new ArrayList<>());
 	}
-	
+
 	protected static void startGUI(
 		List<Supplier<AbstractFractal>> fractalSuppliers,
 		String title,

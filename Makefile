@@ -98,6 +98,10 @@ win-exe: $(GEOMETRIC_EXE)
 run:
 	$(JAVA) -cp $(CLASSPATH) $(GEOMETRIC_MAIN_CLASS)
 
+.PHONY: test
+test:
+	$(JAVA) -cp $(CLASSPATH) Test
+
 .PHONY: clean
 clean:
 	rm -rf $(BIN_DIR) $(DIST_DIR)

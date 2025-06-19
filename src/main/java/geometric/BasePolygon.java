@@ -1,6 +1,6 @@
 package geometric;
 
-import renderer.WorldViewer;
+import renderer.viewer.WorldViewer;
 
 import java.util.ArrayList;
 import java.util.Collections;

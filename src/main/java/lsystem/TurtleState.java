@@ -4,7 +4,7 @@ import geometric.Circle;
 import geometric.LineSegment;
 import geometric.Point;
 
-import renderer.WorldViewer;
+import renderer.viewer.WorldViewer;
 
 import java.awt.Graphics;
 

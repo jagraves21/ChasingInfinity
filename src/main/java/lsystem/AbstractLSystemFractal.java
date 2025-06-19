@@ -4,7 +4,7 @@ import utils.ArgumentParser;
 import utils.color.NamedColors;
 
 import renderer.AbstractFractal;
-import renderer.WorldViewer;
+import renderer.viewer.WorldViewer;
 
 import java.lang.reflect.Method;
 

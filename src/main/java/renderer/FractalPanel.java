@@ -1,5 +1,8 @@
 package renderer;
 
+import renderer.viewer.CartesianWorldViewer;
+import renderer.viewer.WorldViewer;
+
 import java.awt.Color;
 import java.awt.Graphics;
 
@@ -39,7 +42,7 @@ public class FractalPanel extends AnimationPanel {
 
 	public FractalPanel(int width, int height, int fps, int ups) {
 		super(width, height, fps, ups);
-		worldViewer = new WorldViewer(width, height, 0, 0, 1.0);
+		worldViewer = new CartesianWorldViewer(width, height, 0, 0, 1.0);
 		addMouseListeners();
 	}
 
@@ -106,7 +109,7 @@ public class FractalPanel extends AnimationPanel {
 		g.drawLine(0, 0, width, height);
 		g.drawLine(0, height, width, 0);
 
-		WorldViewer tmpViewer = new WorldViewer(worldViewer);
+		WorldViewer tmpViewer = new CartesianWorldViewer(worldViewer);
 		for (Drawable d : drawables) {
 			if (d.isVisibleOnScreen(tmpViewer)) {
 				d.draw(g, tmpViewer);

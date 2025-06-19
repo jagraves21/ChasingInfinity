@@ -171,6 +171,15 @@ public class NamedPalettes extends NamedColors {
 		VERONICA
 	};
 
+	public static final Color[] BIRTHDAY = new Color[]{
+		NamedColors.MOUNTAIN_MEADOW,
+		NamedColors.TITANIUM_YELLOW,
+		NamedColors.ORANGE_PEEL,
+		NamedColors.DARK_ORCHID,
+		NamedColors.SPANISH_RED,
+		NamedColors.TUFTS_BLUE
+	};
+
 	public static final Color[] xTEST = new Color[]{
 		new Color(149, 69, 133),
 		new Color(47, 63, 111),
@@ -204,6 +213,7 @@ public class NamedPalettes extends NamedColors {
 		registerPalette("xPINK_BLUE", xPINK_BLUE);
 		registerPalette("OIL_SLICK", OIL_SLICK);
 		registerPalette("GAS_ON_WATER", GAS_ON_WATER);
+		registerPalette("BIRTHDAY", BIRTHDAY);
 		registerPalette("xTEST", xTEST);
 	}
 

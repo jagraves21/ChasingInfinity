@@ -2,7 +2,7 @@ package geometric.fractals;
 
 import utils.color.NamedColors;
 
-import renderer.WorldViewer;
+import renderer.viewer.WorldViewer;
 
 import geometric.AbstractGeometricFractal;
 import geometric.LineSegment;

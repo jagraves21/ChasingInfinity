@@ -1,5 +1,7 @@
 package renderer;
 
+import renderer.viewer.WorldViewer;
+
 import java.awt.Graphics;
 
 public interface Drawable {

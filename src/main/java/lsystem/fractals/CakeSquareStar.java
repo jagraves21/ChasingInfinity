@@ -13,36 +13,36 @@ import java.awt.Color;
 import java.awt.Paint;
 import java.awt.RadialGradientPaint;
 
-public class HexagonFlake extends AbstractLSystemFractal {
-	public HexagonFlake() {
+public class CakeSquareStar extends AbstractLSystemFractal {
+	public CakeSquareStar() {
 		this(getSuggestedIterations());
 	}
 
-	public HexagonFlake(int maxIterations) {
+	public CakeSquareStar(int maxIterations) {
 		this(maxIterations, true);
 	}
 
-	public HexagonFlake(boolean reset) {
+	public CakeSquareStar(boolean reset) {
 		this(getSuggestedIterations(), reset);
 	}
 
-	public HexagonFlake(int maxIterations, boolean reset) {
+	public CakeSquareStar(int maxIterations, boolean reset) {
 		this(maxIterations, reset, getInitialTurtleState());
 	}
 
-	public HexagonFlake(TurtleState initialTurtle) {
+	public CakeSquareStar(TurtleState initialTurtle) {
 		this(getSuggestedIterations(), initialTurtle);
 	}
 
-	public HexagonFlake(int maxIterations, TurtleState initialTurtle) {
+	public CakeSquareStar(int maxIterations, TurtleState initialTurtle) {
 		this(maxIterations, true, initialTurtle);
 	}
 
-	public HexagonFlake(boolean reset, TurtleState initialTurtle) {
+	public CakeSquareStar(boolean reset, TurtleState initialTurtle) {
 		this(getSuggestedIterations(), reset, initialTurtle);
 	}
 
-	public HexagonFlake(int maxIterations, boolean reset, TurtleState initialTurtle) {
+	public CakeSquareStar(int maxIterations, boolean reset, TurtleState initialTurtle) {
 		super(maxIterations, reset, initialTurtle);
 	}
 
@@ -52,54 +52,49 @@ public class HexagonFlake extends AbstractLSystemFractal {
 
 	public static TurtleState getInitialTurtleState() {
 		return new TurtleState.Builder()
-			.setX(2*Math.cos(Math.toRadians(30))*125)
-			.setY(125)
-			.setAngle(240)
-			.setLineLength(125)
-			.setTurningAngle(30)
-			.setLineLengthScale(3)
+			.setX(0)
+			.setY(0)
+			.setLineLength(180)
+			.setTurningAngle(9)
+			.setLineLengthScale(2 + Math.sqrt(2))
 			.build();
 	}
 
 	public Paint getPaint() {
-		return getPaint(0, 0, 250);
+		return getPaint(0, 0, 180);
 	}
 
 	public Paint getPaint(WorldViewer worldViewer) {
 		return getPaint(
 			worldViewer.worldToScreenX(0),
 			worldViewer.worldToScreenY(0),
-			250 * worldViewer.getZoom()
+			180 * worldViewer.getZoom()
 		);
 	}
 
 	protected Paint getPaint(double x, double y, double radius) {
-		return new RadialGradientPaint(
+		return NamedColors.YELLOW;
+		/*return new RadialGradientPaint(
 			(float) x,
 			(float) y,
 			(float) radius,
-			new float[] {0.45f, 0.55f, 0.75f, 1.0f},
-			new Color[] {
-				NamedColors.ROSSO_CORSA,
-				NamedColors.ORANGE_RED,
-				NamedColors.ORANGE_PEEL,
-				NamedColors.CYAN
-			}
-		);
+			new float[] {0.5f, 1.0f},
+			new Color[] {NamedColors.SCHOOL_BUS_YELLOW, NamedColors.BARN_RED}
+		);*/
 	}
 
 	protected void init() {
 		super.init();
-		addRule('F', "F[++F----F]--F++++F--F");
+		addRule('F', "F[+++++F----------F]-----F++++++++++F-----F");
 		addRule('S', "S<");
 	}
 
 	public String getAxiom() {
-		return "S -F++F[++F]--F[++F]--F[++F]--F[++F]--F[++F]--F";
+		return "S ++[F]++++++++[F]++++++++[F]++++++++[F]++++++++[F]";
 	}
 
 	public String toString() {
-		return "Hexagon Flake";
+		return "Cake Square Star";
 	}
 
 	public static void main(String[] args) {

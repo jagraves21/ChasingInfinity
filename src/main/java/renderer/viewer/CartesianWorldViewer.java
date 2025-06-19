@@ -1,10 +1,10 @@
-package renderer;
+package renderer.viewer;
 
 import java.util.Objects;
 
 import java.awt.geom.AffineTransform;
 
-public class WorldViewer implements Comparable<WorldViewer> {
+public class CartesianWorldViewer implements WorldViewer, Comparable<CartesianWorldViewer> {
 	protected int screenWidth;
 	protected int screenHeight;
 	protected double viewCenterX;
@@ -15,28 +15,23 @@ public class WorldViewer implements Comparable<WorldViewer> {
 	protected double screenCenterX;
 	protected double screenCenterY;
 
-	public WorldViewer(int screenWidth, int screenHeight, double viewCenterX, double viewCenterY, double zoom) {
-		this(screenWidth, screenHeight, viewCenterX, viewCenterY, zoom, true);
-	}
-
-	public WorldViewer(int screenWidth, int screenHeight, double viewCenterX, double viewCenterY, double zoom, boolean flipY) {
+	public CartesianWorldViewer(int screenWidth, int screenHeight, double viewCenterX, double viewCenterY, double zoom) {
 		this.screenWidth = screenWidth;
 		this.screenHeight = screenHeight;
 		this.viewCenterX = viewCenterX;
 		this.viewCenterY = viewCenterY;
 		this.zoom = zoom;
-		this.flipY = flipY;
+		this.flipY = true;
 		updateScreenCenter();
 	}
 
-	public WorldViewer(WorldViewer worldViewer) {
+	public CartesianWorldViewer(WorldViewer other) {
 		this(
-			worldViewer.screenWidth,
-			worldViewer.screenHeight,
-			worldViewer.viewCenterX,
-			worldViewer.viewCenterY,
-			worldViewer.zoom,
-			worldViewer.flipY
+			other.getScreenWidth(),
+			other.getScreenHeight(),
+			other.getViewCenterX(),
+			other.getViewCenterY(),
+			other.getZoom()
 		);
 	}
 
@@ -154,8 +149,8 @@ public class WorldViewer implements Comparable<WorldViewer> {
 	public boolean equals(Object obj) {
         if (this == obj) return true;
         if (obj == null) return false;
-        if (!(obj instanceof WorldViewer)) return false;
-		WorldViewer other = (WorldViewer) obj;
+        if (!(obj instanceof CartesianWorldViewer)) return false;
+		CartesianWorldViewer other = (CartesianWorldViewer) obj;
 		return screenWidth == other.screenWidth &&
 			screenHeight == other.screenHeight &&
 			Double.compare(viewCenterX, other.viewCenterX) == 0 &&
@@ -164,7 +159,7 @@ public class WorldViewer implements Comparable<WorldViewer> {
 			flipY == other.flipY;
     }
 
-	public int compareTo(WorldViewer other) {
+	public int compareTo(CartesianWorldViewer other) {
 		int cmp;
 		cmp = Integer.compare(screenWidth, other.screenWidth);
 		if (cmp != 0) return cmp;
@@ -189,19 +184,16 @@ public class WorldViewer implements Comparable<WorldViewer> {
 	}
 
 	public String toString() {
-		//return String.format("Point{x=%.2f, y=%.2f, paint=%s}", x, y, paint);
-		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append("WorldViewer[");
-		stringBuilder.append(String.format("  screenWidth   %d\n", screenWidth));
-		stringBuilder.append(String.format("  screenHeight  %d\n", screenHeight));
-		stringBuilder.append(String.format("  viewCenterX   %.2f\n", viewCenterX));
-		stringBuilder.append(String.format("  viewCenterY   %.2f\n", viewCenterY));
-		stringBuilder.append(String.format("  zoom          %.2f\n", zoom));
-		stringBuilder.append(String.format("  flipY         %b\n", flipY));
-		stringBuilder.append(String.format("  screenCenterX %.2f\n", screenCenterX));
-		stringBuilder.append(String.format("  screenCenterY %.2f\n", screenCenterY));
-		stringBuilder.append("\n");
-		return stringBuilder.toString();
+		return String.format(
+			"DefaultWorldViewer[%n" +
+			"  screenWidth   %d%n" +
+			"  screenHeight  %d%n" +
+			"  viewCenterX   %.2f%n" +
+			"  viewCenterY   %.2f%n" +
+			"  zoom          %.2f%n" +
+			"]",
+			screenWidth, screenHeight, viewCenterX, viewCenterY, zoom
+		);
 	}
 }
 

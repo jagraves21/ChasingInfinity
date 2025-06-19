@@ -3,7 +3,7 @@ package lsystem.fractals;
 import utils.color.ColorUtils;
 import utils.color.NamedColors;
 
-import renderer.WorldViewer;
+import renderer.viewer.WorldViewer;
 
 import lsystem.AbstractLSystemFractal;
 import lsystem.TurtleState;

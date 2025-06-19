@@ -1,7 +1,7 @@
 package geometric;
 
 import renderer.Drawable;
-import renderer.WorldViewer;
+import renderer.viewer.WorldViewer;
 
 import java.util.Objects;
 
