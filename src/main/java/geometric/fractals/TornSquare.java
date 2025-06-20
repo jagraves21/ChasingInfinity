@@ -1,6 +1,6 @@
 package geometric.fractals;
 
-import utils.color.NamedPalettes;
+import utils.color.NamedColors;
 
 import renderer.viewer.WorldViewer;
 
@@ -15,9 +15,6 @@ import java.util.Iterator;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.MultipleGradientPaint;
-import java.awt.Paint;
-import java.awt.RadialGradientPaint;
 
 public class TornSquare extends AbstractGeometricFractal<TornSquare> {
 	public static final double RATIO = 0.48;
@@ -26,8 +23,6 @@ public class TornSquare extends AbstractGeometricFractal<TornSquare> {
 	public static final double INTERIOR_ANGLE = -Math.toDegrees( Math.acos((BASE/2)/LEGS) );
 	public static final double EXTERIOR_ANGLE = INTERIOR_ANGLE - 180;
 
-	protected Point center;
-	protected Point pointOnCircle;
 	protected Polygon seed;
 	protected List<Transformable> fractalComponents;
 
@@ -47,37 +42,6 @@ public class TornSquare extends AbstractGeometricFractal<TornSquare> {
 		super(iterations, reset);
 	}
 
-	public Paint getPaint() {
-		return getPaint(
-			this.center,
-			this.pointOnCircle
-		);
-	}
-
-	public Paint getPaint(WorldViewer worldViewer) {
-		return getPaint(
-			this.center.toScreen(worldViewer),
-			this.pointOnCircle.toScreen(worldViewer)
-		);
-	}
-
-	protected Paint getPaint(Point center, Point pointOnCircle) {
-		Color[] colors = NamedPalettes.GAS_ON_WATER;
-		float[] fractions = new float[colors.length];
-		for (int ii=0; ii < fractions.length; ii++) {
-			fractions[ii] = ii / (float) (fractions.length-1);
-		}
-
-		return new RadialGradientPaint(
-			center.asAWTPoint(),
-			(float) center.distance(pointOnCircle),
-			center.interpolate(pointOnCircle, 0.5).asAWTPoint(),
-			fractions,
-			colors,
-			MultipleGradientPaint.CycleMethod.NO_CYCLE
-		);
-	}
-
 	protected void init() {
 		super.init();
 
@@ -88,12 +52,10 @@ public class TornSquare extends AbstractGeometricFractal<TornSquare> {
 		Point p4 = new Point(-length/2, -length/2, null);
 		this.seed = new Polygon(
 			new Point[] {p1, p2, p3, p4},
-			new Color(243, 165, 74),
+			NamedColors.DEEP_SAFFRON,
 			true
 		);
 
-		center = p1.getMidpoint(p3);
-		pointOnCircle = new Point(p1);
 		fractalComponents = new LinkedList<>();
 		fractalComponents.add(seed);
 	}
@@ -151,7 +113,7 @@ public class TornSquare extends AbstractGeometricFractal<TornSquare> {
 
 	public void draw(Graphics g, WorldViewer worldViewer) {
 		Graphics tmpG = g.create();
-		tmpG.setColor(new Color(4,10,123));
+		tmpG.setColor(NamedColors.NAVY_BLUE);
 		tmpG.fillRect(
 			0, 0, worldViewer.getScreenWidth(), worldViewer.getScreenHeight()
 		);

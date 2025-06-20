@@ -2,6 +2,8 @@ package geometric.fractals;
 
 import utils.color.NamedColors;
 
+import geometric.utils.PaintFactory;
+
 import geometric.AbstractGeometricFractal;
 import geometric.Point;
 import geometric.Polygon;
@@ -51,10 +53,10 @@ public class Eee extends AbstractGeometricFractal<Eee> {
 
 		fractalComponents = seed;
 
-		setRadialGradientPainter(
+		setPainter(PaintFactory.getLinearPainter(
 			p1.getMidpoint(p3), p1.scale(1.25),
-			new Color[] {NamedColors.GREEN, NamedColors.BLUE}
-		);
+			NamedColors.GREEN, NamedColors.BLUE
+		));
 	}
 
 	public void reset() {

@@ -78,7 +78,6 @@ public class ColorMatcher {
 			JLabel label = new JLabel(textLabel, SwingConstants.CENTER);
 			label.setForeground(textColor);
 			label.addMouseListener(new MouseAdapter() {
-				@Override
 				public void mouseClicked(MouseEvent e) {
 					StringSelection selection = new StringSelection(name);
 					Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();

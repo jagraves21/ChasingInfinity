@@ -62,7 +62,7 @@ public class CesaroFractal extends AbstractGeometricFractal<CesaroFractal> {
 
 	protected Paint getPaint(Point center, Point pointOnCircle) {
 		return new RadialGradientPaint(
-			center.asAWTPoint(),
+			center.toAWTPoint(),
 			(float) center.distance(pointOnCircle),
 			new float[] {0.5f, 1.0f},
 			new Color[] {NamedColors.RED, NamedColors.BLUE},

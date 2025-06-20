@@ -3,10 +3,10 @@ package geometric;
 import renderer.AbstractFractal;
 import renderer.Drawable;
 
-import renderer.Painter;
-import renderer.GradientPainter;
-import renderer.RadialGradientPainter;
-import renderer.ColorPainter;
+import renderer.painter.ColorPainter;
+import renderer.painter.LinearGradientPainter;
+import renderer.painter.Painter;
+import renderer.painter.RadialGradientPainter;
 
 import renderer.viewer.WorldViewer;
 
@@ -58,41 +58,6 @@ public abstract class AbstractGeometricFractal<T extends AbstractGeometricFracta
 
 	public void setPainter(Painter painter) {
 		this.painter = painter;
-	}
-
-	public void setRadialGradientPainter(Point center, Point pointOnCircle, Color[] colors) {
-		float[] fractions = new float[colors.length];
-		for (int ii=0; ii < fractions.length; ii++) {
-			fractions[ii] = ii / (float) (fractions.length-1);
-		}
-
-		setRadialGradientPainter(center, pointOnCircle, fractions, colors);
-	}
-
-	public void setRadialGradientPainter(
-		Point center, Point pointOnCircle, float[] fractions, Color[] colors
-	) {
-		setPainter(
-			new RadialGradientPainter(
-				(float) center.getX(), (float) center.getY(),
-				(float) center.distance(pointOnCircle),
-				fractions, colors
-			)
-		);
-	}
-
-	public void setGradientPainter(Point p1, Color color1, Point p2, Color color2) {
-		setGradientPainter(p1, color1, p2, color2, false);
-	}
-
-	public void setGradientPainter(Point p1, Color color1, Point p2, Color color2, boolean cyclic) {
-		setPainter(
-			new GradientPainter(
-				(float) p1.getX(), (float) p1.getY(), color1,
-				(float) p2.getX(), (float) p2.getY(), color2,
-				cyclic
-			)
-		);
 	}
 
 	protected void init() {

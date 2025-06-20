@@ -240,11 +240,20 @@ public class Point extends AbstractShape<Point> {
 		this.toScreen(worldViewer).drawWithPaint(g);
 	}
 
-	public java.awt.Point asAWTPoint() {
+	public java.awt.Point toAWTPoint() {
 		return new java.awt.Point(
-			(int) Math.round(x),
-			(int) Math.round(y)
+			(int) Math.round(x), (int) Math.round(y)
 		);
+	}
+
+	public java.awt.geom.Point2D.Float toPoint2DFloat() {
+		return new java.awt.geom.Point2D.Float(
+			(float) x, (float) y
+		);
+	}
+
+	public java.awt.geom.Point2D.Double toPoint2DDouble() {
+		return new java.awt.geom.Point2D.Double(x, y);
 	}
 
 	public boolean equals(Object obj) {

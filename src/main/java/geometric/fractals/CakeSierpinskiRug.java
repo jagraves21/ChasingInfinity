@@ -6,6 +6,7 @@ import geometric.AbstractGeometricFractal;
 import geometric.Point;
 import geometric.Transformable;
 import geometric.Polygon;
+import geometric.utils.PaintFactory;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -55,12 +56,12 @@ public class CakeSierpinskiRug extends AbstractGeometricFractal<CakeSierpinskiRu
 
 		fractalComponents = new LinkedList<>(seed);
 
-		setGradientPainter(
+		setPainter(PaintFactory.getLinearPainter(
 			p1.interpolate(p3, 1.0/3.0),
-			NamedColors.INDIGO,
 			p1.interpolate(p3, 2.0/3.0),
+			NamedColors.INDIGO,
 			NamedColors.ROSE
-		);
+		));
 	}
 
 	public void reset() {

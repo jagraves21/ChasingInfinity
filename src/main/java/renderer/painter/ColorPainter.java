@@ -1,4 +1,6 @@
-package renderer;
+package renderer.painter;
+
+import renderer.viewer.WorldViewer;
 
 import utils.color.NamedColors;
 
@@ -16,7 +18,7 @@ public class ColorPainter extends Painter {
 		this.color = color;
 	}
 
-	public Paint getPaint() {
+	public Paint getPaint(WorldViewer worldViewer) {
 		return color;
 	}
 }
