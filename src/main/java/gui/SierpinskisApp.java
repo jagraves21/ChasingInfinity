@@ -23,7 +23,7 @@ import javax.swing.ImageIcon;
 
 import java.net.URL;
 
-public class Sierpinskis {
+public class SierpinskisApp {
 	public static final String TITLE = "Sierpinski Triangles";
 
 	public static final String[] ICON_FILENAMES = {
@@ -39,7 +39,7 @@ public class Sierpinskis {
 		List<Image> icons = new ArrayList<>();
 		for (String filename : ICON_FILENAMES) {
 			try {
-				URL url = Sierpinskis.class.getResource(filename);
+				URL url = SierpinskisApp.class.getResource(filename);
 				if (url != null) {
 					ImageIcon icon = new ImageIcon(url);
 					icons.add(icon.getImage());
