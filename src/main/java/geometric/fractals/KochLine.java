@@ -2,19 +2,17 @@ package geometric.fractals;
 
 import utils.color.NamedColors;
 
-import renderer.viewer.WorldViewer;
-
 import geometric.AbstractGeometricFractal;
 import geometric.LineSegment;
 import geometric.Point;
 import geometric.Transformable;
+import geometric.utils.PaintFactory;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Iterator;
 
 import java.awt.Color;
-import java.awt.RadialGradientPaint;
 import java.awt.Paint;
 
 public class KochLine extends AbstractGeometricFractal<KochLine> {
@@ -24,8 +22,6 @@ public class KochLine extends AbstractGeometricFractal<KochLine> {
 	public static final double INTERIOR_ANGLE = Math.toDegrees( Math.acos((BASE/2)/LEGS) );
 	public static final double EXTERIOR_ANGLE = INTERIOR_ANGLE - 180;
 
-	protected Point center;
-	protected Point pointOnCircle;
 	protected List<Transformable> seed;
 	protected List<Transformable> fractalComponents;
 
@@ -45,31 +41,6 @@ public class KochLine extends AbstractGeometricFractal<KochLine> {
 		super(iterations, reset);
 	}
 
-	public Paint getPaint() {
-		return getPaint(
-			this.center,
-			this.pointOnCircle
-		);
-	}
-
-	public Paint getPaint(WorldViewer worldViewer) {
-		return getPaint(
-			this.center.toScreen(worldViewer),
-			this.pointOnCircle.toScreen(worldViewer)
-		);
-	}
-
-	protected Paint getPaint(Point center, Point pointOnCircle) {
-		return new RadialGradientPaint(
-			(float) center.getX(),
-			(float) center.getY(),
-			(float) center.distance(pointOnCircle),
-			new float[] {0.3f, 1.0f},
-			new Color[] {NamedColors.RED, NamedColors.YELLOW}
-			//MultipleGradientPaint.CycleMethod.REPEAT
-		);
-	}
-
 	protected void init() {
 		super.init();
 
@@ -81,10 +52,16 @@ public class KochLine extends AbstractGeometricFractal<KochLine> {
 		Point p2 = new Point( length/2, -height/2, null);
 
 		seed.add(new LineSegment(p1,p2,null));
-
-		center = p1.getMidpoint(p2);
-		pointOnCircle = new Point(p1);
 		fractalComponents = seed;
+
+		Point center = p1.getMidpoint(p2);
+		Point pointOnCircle = new Point(p1);
+		setPainter(PaintFactory.getRadialPainter(
+			p1.getMidpoint(p2), p1,
+			new float[] {0.3f, 1.0f},
+			new Color[] {NamedColors.RED, NamedColors.YELLOW}
+		));
+			
 	}
 
 	public void reset() {

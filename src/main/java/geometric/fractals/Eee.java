@@ -2,18 +2,15 @@ package geometric.fractals;
 
 import utils.color.NamedColors;
 
-import geometric.utils.PaintFactory;
-
 import geometric.AbstractGeometricFractal;
 import geometric.Point;
 import geometric.Polygon;
 import geometric.Transformable;
+import geometric.utils.PaintFactory;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Iterator;
-
-import java.awt.Color;
 
 public class Eee extends AbstractGeometricFractal<Eee> {
 	protected List<Transformable> seed;
@@ -42,20 +39,16 @@ public class Eee extends AbstractGeometricFractal<Eee> {
 
 		double width = 200;
 		double height = 2 * width;
-		Point p1 = new Point(-width/2,  height/2);
-		Point p2 = new Point( width/2,  height/2);
-		Point p3 = new Point( width/2, -height/2);
-		Point p4 = new Point(-width/2, -height/2);
-
-		seed.add(
-			new Polygon(new Point[] {p1,p2,p3,p4}, null, true)
+		Point topLeft = new Point(-width/2,  height/2);
+		Polygon rectangle = Polygon.createRectangle(
+			topLeft, width, height, null, true
 		);
+		seed.add(rectangle);
 
 		fractalComponents = seed;
 
 		setPainter(PaintFactory.getLinearPainter(
-			p1.getMidpoint(p3), p1.scale(1.25),
-			NamedColors.GREEN, NamedColors.BLUE
+			topLeft, rectangle.getVertex(2), NamedColors.GREEN, NamedColors.BLUE
 		));
 	}
 
@@ -122,38 +115,6 @@ public class Eee extends AbstractGeometricFractal<Eee> {
 						.translate(pA1.getX()-pA2.getX(), pA1.getY()-pA2.getY())
 						.rotateAround(pA1, angle)
 				);
-
-				/*Iterator<Point> iter = rectangle.getVertices().iterator();
-				Point p1 = iter.next();
-				Point p2 = iter.next();
-				Point p3 = iter.next();
-				Point p4 = iter.next();
-
-				Point p21 = p1.interpolate(p4, 0.25);
-				Point p22 = p2.interpolate(p3, 0.25);
-				Point p23 = p2.interpolate(p3, 0.75);
-				Point p24 = p1.interpolate(p4, 0.75);
-
-				Point p31 = p21.getMidpoint(p22);
-				Point p32 = p24.getMidpoint(p23);
-
-				newComponents.add(new Polygon(
-					new Point[] {p2,p22,p21,p1},
-					rectangle.getPaint(),
-					rectangle.isFilled()
-				));
-
-				newComponents.add(new Polygon(
-					new Point[] {p21,p31,p32,p24},
-					rectangle.getPaint(),
-					rectangle.isFilled()
-				));
-
-				newComponents.add(new Polygon(
-					new Point[] {p4,p24,p23,p3},
-					rectangle.getPaint(),
-					rectangle.isFilled()
-				));*/
 			}
 			else {
 				newComponents.add(t);

@@ -2,19 +2,17 @@ package geometric.fractals;
 
 import utils.color.NamedColors;
 
-import renderer.viewer.WorldViewer;
-
 import geometric.AbstractGeometricFractal;
 import geometric.LineSegment;
 import geometric.Point;
 import geometric.Transformable;
+import geometric.utils.PaintFactory;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Iterator;
 
 import java.awt.Color;
-import java.awt.RadialGradientPaint;
 import java.awt.Paint;
 
 public class LevyTapestryOutside extends AbstractGeometricFractal<LevyTapestryOutside> {
@@ -43,31 +41,6 @@ public class LevyTapestryOutside extends AbstractGeometricFractal<LevyTapestryOu
 		return 10;
 	}
 
-	public Paint getPaint() {
-		return getPaint(
-			this.center,
-			this.pointOnCircle
-		);
-	}
-
-	public Paint getPaint(WorldViewer worldViewer) {
-		return getPaint(
-			this.center.toScreen(worldViewer),
-			this.pointOnCircle.toScreen(worldViewer)
-		);
-	}
-
-	protected Paint getPaint(Point center, Point pointOnCircle) {
-		return new RadialGradientPaint(
-			(float) center.getX(),
-			(float) center.getY(),
-			(float) center.distance(pointOnCircle),
-			new float[] {0.75f, 1.0f},
-			new Color[] {NamedColors.ORANGE, NamedColors.BLUE}
-			//MultipleGradientPaint.CycleMethod.REPEAT
-		);
-	}
-
 	protected void init() {
 		super.init();
 
@@ -84,9 +57,13 @@ public class LevyTapestryOutside extends AbstractGeometricFractal<LevyTapestryOu
 		seed.add(new LineSegment(p3,p4,null));
 		seed.add(new LineSegment(p4,p1,null));
 
-		center = new Point(0, 0);
-		pointOnCircle = new Point(length, length);
 		fractalComponents = seed;
+
+		setPainter(PaintFactory.getRadialPainter(
+			new Point(), new Point(length,length),
+			new float[] {0.75f, 1.0f},
+			new Color[] {NamedColors.ORANGE, NamedColors.BLUE}
+		));
 	}
 
 	public void reset() {

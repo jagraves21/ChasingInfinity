@@ -14,23 +14,23 @@ import java.util.Iterator;
 
 import java.awt.Color;
 
-public class CakeSierpinskiRug extends AbstractGeometricFractal<CakeSierpinskiRug> {
+public class SierpinskiRug extends AbstractGeometricFractal<SierpinskiRug> {
 	protected List<Transformable> seed;
 	protected List<Transformable> fractalComponents;
 
-	public CakeSierpinskiRug() {
+	public SierpinskiRug() {
 		this(getSuggestedIterations());
 	}
 
-	public CakeSierpinskiRug(int iterations) {
+	public SierpinskiRug(int iterations) {
 		this(iterations, true);
 	}
 
-	public CakeSierpinskiRug(boolean reset) {
+	public SierpinskiRug(boolean reset) {
 		this(getSuggestedIterations(), true);
 	}
 
-	public CakeSierpinskiRug(int iterations, boolean reset) {
+	public SierpinskiRug(int iterations, boolean reset) {
 		super(iterations, reset);
 	}
 
@@ -57,8 +57,12 @@ public class CakeSierpinskiRug extends AbstractGeometricFractal<CakeSierpinskiRu
 		setPainter(PaintFactory.getLinearPainter(
 			p1.interpolate(p3, 1.0/3.0),
 			p1.interpolate(p3, 2.0/3.0),
-			NamedColors.INDIGO,
-			NamedColors.ROSE
+			new float[] {0.0f, 0.5f, 1.0f},
+			new Color[] {
+				NamedColors.MEDIUM_BLUE,
+				NamedColors.DEEP_SKY_BLUE,
+				NamedColors.AQUAMARINE
+			}
 		));
 	}
 
@@ -108,7 +112,7 @@ public class CakeSierpinskiRug extends AbstractGeometricFractal<CakeSierpinskiRu
 		fractalComponents = newComponents;
 	}
 
-	public CakeSierpinskiRug self() {
+	public SierpinskiRug self() {
 		return this;
 	}
 
@@ -117,7 +121,7 @@ public class CakeSierpinskiRug extends AbstractGeometricFractal<CakeSierpinskiRu
 	}
 
 	public String toString() {
-		return "Cake Sierpinski Rug";
+		return "Sierpinski Rug";
 	}
 
 	public static void main(String[] args) {

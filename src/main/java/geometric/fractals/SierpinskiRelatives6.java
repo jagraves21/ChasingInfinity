@@ -1,23 +1,8 @@
 package geometric.fractals;
 
-import utils.color.NamedColors;
-
-import renderer.viewer.WorldViewer;
-
 import geometric.AbstractGeometricFractal;
 import geometric.Point;
-import geometric.Transformable;
 import geometric.Polygon;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Iterator;
-
-import java.awt.Color;
-import java.awt.RadialGradientPaint;
-import java.awt.Paint;
 
 public class SierpinskiRelatives6 extends SierpinskiRelatives {
 	public SierpinskiRelatives6() {

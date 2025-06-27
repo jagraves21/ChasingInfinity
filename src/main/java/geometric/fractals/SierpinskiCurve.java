@@ -2,26 +2,18 @@ package geometric.fractals;
 
 import utils.color.NamedColors;
 
-import renderer.viewer.WorldViewer;
-
 import geometric.AbstractGeometricFractal;
 import geometric.LineSegment;
 import geometric.Point;
 import geometric.Transformable;
 import geometric.Triangle;
+import geometric.utils.PaintFactory;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Iterator;
 
-import java.awt.Color;
-import java.awt.MultipleGradientPaint;
-import java.awt.Paint;
-import java.awt.RadialGradientPaint;
-
 public class SierpinskiCurve extends AbstractGeometricFractal<SierpinskiCurve> {
-	protected Point center;
-	protected Point pointOnCircle;
 	protected List<Transformable> seed;
 	protected List<Transformable> fractalComponents;
 
@@ -45,42 +37,19 @@ public class SierpinskiCurve extends AbstractGeometricFractal<SierpinskiCurve> {
 		return 10;
 	}
 
-	public Paint getPaint() {
-		return getPaint(
-			this.center,
-			this.pointOnCircle
-		);
-	}
-
-	public Paint getPaint(WorldViewer worldViewer) {
-		return getPaint(
-			this.center.toScreen(worldViewer),
-			this.pointOnCircle.toScreen(worldViewer)
-		);
-	}
-
-	protected Paint getPaint(Point center, Point pointOnCircle) {
-		return new RadialGradientPaint(
-			(float) center.getX(),
-			(float) center.getY(),
-			(float) center.distance(pointOnCircle),
-			new float[] {0.0f, 1.0f},
-			new Color[] {NamedColors.BLUE, NamedColors.RED}
-			//MultipleGradientPaint.CycleMethod.REPEAT
-		);
-	}
-
 	protected void init() {
 		super.init();
 
 		seed = new LinkedList<>();
 
-		double height = 500;
-		double base = (2 * height) / Math.sqrt(3);
-		Point p1 = new Point(0, height/2, null);
-		Point p2 = new Point(p1).translate(-base/2, -height);
-		Point p3 = new Point(p1).translate(base/2, -height);
-
+		Triangle triangle = Triangle.createEquilateralFromTop(
+			new Point(0, 250), 500, null, false
+		);
+		Iterator<Point> iter = triangle.getVertices().iterator();
+		Point p1 = iter.next();
+		Point p3 = iter.next();
+		Point p2 = iter.next();
+		
 		Point t1 = p1.interpolate(p3, 0.25);
 		Point t2 = p1.interpolate(p2, 0.25);
 		Point t3 = p1.interpolate(p2, 0.5);
@@ -101,9 +70,11 @@ public class SierpinskiCurve extends AbstractGeometricFractal<SierpinskiCurve> {
 		seed.add(new LineSegment(t9, t8, null));
 		seed.add(new LineSegment(t1, t9, null));
 
-		center = new Triangle(new Point[] {p1,p2,p3}).centroid();
-		pointOnCircle = new Point(p1);
 		fractalComponents = seed;
+
+		setPainter(PaintFactory.getRadialPainter(
+			triangle.centroid(), p1, NamedColors.BLUE, NamedColors.RED
+		));
 	}
 
 	public void reset() {

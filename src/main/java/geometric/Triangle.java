@@ -155,5 +155,45 @@ public class Triangle extends BasePolygon<Triangle> {
 			"Triangle{vertices=%s, paint=%s, fill=%b}", vertices, paint, fill
 		);
 	}
+
+	public static Triangle createEquilateralFromCenter(Point center, double height) {
+		return createEquilateralFromCenter(center, height, NamedColors.WHITE);
+	}
+
+	public static Triangle createEquilateralFromCenter(Point center, double height, Paint paint) {
+		return createEquilateralFromCenter(center, height, paint, false);
+	}
+
+	public static Triangle createEquilateralFromCenter(Point center, double height, Paint paint, boolean fill) {
+		double halfHeight = height / 2.0;
+		double dx = height * (Math.sqrt(3) / 2.0);
+
+		Point top = new Point(center).translate(0, height);
+		Point bottomRight = new Point(center).translate(dx, -halfHeight);
+		Point bottomLeft = new Point(center).translate(-dx, -halfHeight);
+
+		Point[] vertices = new Point[] { top, bottomRight, bottomLeft };
+
+		return new Triangle(vertices, paint, fill);
+	}
+
+	public static Triangle createEquilateralFromTop(Point top, double height) {
+		return createEquilateralFromTop(top, height, NamedColors.WHITE);
+	}
+
+	public static Triangle createEquilateralFromTop(Point top, double height, Paint paint) {
+		return createEquilateralFromTop(top, height, paint, false);
+	}
+
+	public static Triangle createEquilateralFromTop(Point top, double height, Paint paint, boolean fill) {
+		double dx = height / Math.sqrt(3);
+
+		Point bottomRight = new Point(top).translate(dx, -height);
+		Point bottomLeft = new Point(top).translate(-dx, -height);
+
+		Point[] vertices = new Point[] {top, bottomRight, bottomLeft};
+		return new Triangle(vertices, paint, fill);
+	}
+
 }
 

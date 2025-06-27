@@ -16,8 +16,6 @@ import java.util.Iterator;
 import java.awt.Color;
 
 public class SierpinskiCurve1 extends AbstractGeometricFractal<SierpinskiCurve1> {
-	protected Point center;
-	protected Point pointOnCircle;
 	protected List<Transformable> seed;
 	protected List<Transformable> fractalComponents;
 
@@ -46,11 +44,13 @@ public class SierpinskiCurve1 extends AbstractGeometricFractal<SierpinskiCurve1>
 
 		seed = new LinkedList<>();
 
-		double height = 400;
-		double base = (2 * height) / Math.sqrt(3);
-		Point p1 = new Point(0, 2*height/3, null);
-		Point p2 = new Point(p1).translate(base/2, -height);
-		Point p3 = new Point(p1).translate(-base/2, -height);
+		Triangle triangle = Triangle.createEquilateralFromTop(
+			new Point(0, 2*400/3.0), 400, null, false
+		);
+		Iterator<Point> iter = triangle.getVertices().iterator();
+		Point p1 = iter.next();
+		Point p2 = iter.next();
+		Point p3 = iter.next();
 
 		Point t1 = p1.interpolate(p3, 0.25);
 		Point t2 = p1.interpolate(p2, 0.25);
@@ -72,8 +72,6 @@ public class SierpinskiCurve1 extends AbstractGeometricFractal<SierpinskiCurve1>
 		seed.add(new LineSegment(t9, t8, NamedColors.GREEN));
 		seed.add(new LineSegment(t1, t9, NamedColors.BLUE));
 
-		center = new Triangle(new Point[] {p1,p2,p3}).centroid();
-		pointOnCircle = new Point(p1);
 		fractalComponents = seed;
 	}
 

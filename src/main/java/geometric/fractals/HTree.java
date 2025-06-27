@@ -2,24 +2,19 @@ package geometric.fractals;
 
 import utils.color.NamedColors;
 
-import renderer.viewer.WorldViewer;
-
 import geometric.AbstractGeometricFractal;
 import geometric.Point;
 import geometric.Transformable;
 import geometric.LineSegment;
+import geometric.utils.PaintFactory;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Iterator;
 
 import java.awt.Color;
-import java.awt.GradientPaint;
-import java.awt.Paint;
 
 public class HTree extends AbstractGeometricFractal<HTree> {
-	protected Point left;
-	protected Point right;
 	protected List<LineSegment> seed;
 	protected List<LineSegment> currentSegments;
 	protected List<Transformable> fractalComponents;
@@ -44,27 +39,6 @@ public class HTree extends AbstractGeometricFractal<HTree> {
 		return 9;
 	}
 
-	public Paint getPaint() {
-		return getPaint(
-			this.left,
-			this.right
-		);
-	}
-
-	public Paint getPaint(WorldViewer worldViewer) {
-		return getPaint(
-			this.left.toScreen(worldViewer),
-			this.right.toScreen(worldViewer)
-		);
-	}
-
-	protected Paint getPaint(Point left, Point right) {
-		return new GradientPaint(
-			(float)left.getX(), (float)left.getY(), NamedColors.BLUE,
-			(float)right.getX(), (float)right.getY(), NamedColors.RED
-		);
-	}
-
 	protected void init() {
 		super.init();
 
@@ -78,10 +52,17 @@ public class HTree extends AbstractGeometricFractal<HTree> {
 			new LineSegment(p1, p2, null)
 		);
 
-		left = new Point(p1);
-		right = new Point(p2);
 		currentSegments = seed;
 		fractalComponents = new LinkedList<>(seed);
+
+		setPainter(PaintFactory.getLinearPainter(
+			p1, p2,
+			new float[] {0.0f, 0.49f, 0.51f, 1.0f},	
+			new Color[] {
+				NamedColors.BLUE, NamedColors.BLUE,
+				NamedColors.RED, NamedColors.RED
+			}
+		));
 	}
 
 	public void reset() {

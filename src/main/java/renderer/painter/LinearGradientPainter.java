@@ -76,7 +76,6 @@ public class LinearGradientPainter extends Painter {
 		);
 	}
 
-	@Override
 	public String toString() {
 		return String.format(
 			"LinearGradientPainter[%n" +

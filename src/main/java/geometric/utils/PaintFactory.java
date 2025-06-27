@@ -1,10 +1,12 @@
 package geometric.utils;
 
 import geometric.Point;
+
 import renderer.painter.ColorPainter;
 import renderer.painter.LinearGradientPainter;
 import renderer.painter.Painter;
 import renderer.painter.RadialGradientPainter;
+import renderer.painter.TriGradientPainter;
 
 import java.awt.Color;
 import java.awt.MultipleGradientPaint.CycleMethod;
@@ -84,7 +86,7 @@ public class PaintFactory {
 		Point center, Point pointOnCircle, float[] fractions, Color[] colors
 	) {
 		return getRadialPainter(
-			center, pointOnCircle, generateFractions(colors), colors, CycleMethod.NO_CYCLE
+			center, pointOnCircle, fractions, colors, CycleMethod.NO_CYCLE
 		);
 	}
 
@@ -97,6 +99,16 @@ public class PaintFactory {
 			fractions,
 			colors,
 			cycleMethod
+		);
+	}
+
+	public static TriGradientPainter getTriGradientPainter(
+		Point p1, Color c1, Point p2, Color c2, Point p3, Color c3
+	) {
+		return new TriGradientPainter(
+			p1.toPoint2DFloat(), c1,
+			p2.toPoint2DFloat(), c2,
+			p3.toPoint2DFloat(), c3
 		);
 	}
 }

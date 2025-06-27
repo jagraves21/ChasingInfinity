@@ -3,8 +3,6 @@ package geometric.fractals;
 import utils.color.ColorUtils;
 import utils.color.NamedColors;
 
-import renderer.viewer.WorldViewer;
-
 import geometric.AbstractGeometricFractal;
 import geometric.LineSegment;
 import geometric.Point;
@@ -15,8 +13,6 @@ import java.util.List;
 import java.util.Iterator;
 
 import java.awt.Color;
-import java.awt.RadialGradientPaint;
-import java.awt.Paint;
 
 public class GoldenDragon extends AbstractGeometricFractal<GoldenDragon> {
 	public static final double PHI = (1 + Math.sqrt(5))/2;
@@ -29,8 +25,6 @@ public class GoldenDragon extends AbstractGeometricFractal<GoldenDragon> {
 	));
 	public static final double ANGLE_C = 180 - (ANGLE_A + ANGLE_B);
 
-	protected Point center;
-	protected Point pointOnCircle;
 	protected List<Transformable> seed;
 	protected List<Transformable> fractalComponents;
 
@@ -54,31 +48,6 @@ public class GoldenDragon extends AbstractGeometricFractal<GoldenDragon> {
 		return 18;
 	}
 
-	public Paint getPaint() {
-		return getPaint(
-			this.center,
-			this.pointOnCircle
-		);
-	}
-
-	public Paint getPaint(WorldViewer worldViewer) {
-		return getPaint(
-			this.center.toScreen(worldViewer),
-			this.pointOnCircle.toScreen(worldViewer)
-		);
-	}
-
-	protected Paint getPaint(Point center, Point pointOnCircle) {
-		return new RadialGradientPaint(
-			(float) center.getX(),
-			(float) center.getY(),
-			(float) center.distance(pointOnCircle),
-			new float[] {0.3f, 1.0f},
-			new Color[] {NamedColors.RED, NamedColors.YELLOW}
-			//MultipleGradientPaint.CycleMethod.REPEAT
-		);
-	}
-
 	protected void init() {
 		super.init();
 
@@ -94,8 +63,6 @@ public class GoldenDragon extends AbstractGeometricFractal<GoldenDragon> {
 			ColorUtils.blend((Color)p1.getPaint(), (Color)p2.getPaint())
 		));
 
-		center = p1.getMidpoint(p2);
-		pointOnCircle = new Point(p1);
 		fractalComponents = seed;
 	}
 
@@ -109,7 +76,6 @@ public class GoldenDragon extends AbstractGeometricFractal<GoldenDragon> {
 		for (Transformable component : fractalComponents) {
 			if (component instanceof LineSegment) {
 				LineSegment lineSegment = (LineSegment) component;
-				Paint paint = lineSegment.getPaint();
 				boolean drawEndpoints = lineSegment.getDrawEndpoints();
 
 				Point p1 = lineSegment.getStart();

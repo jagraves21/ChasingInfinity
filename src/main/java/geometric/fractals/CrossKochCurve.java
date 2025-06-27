@@ -2,24 +2,20 @@ package geometric.fractals;
 
 import utils.color.NamedColors;
 
-import renderer.viewer.WorldViewer;
-
 import geometric.AbstractGeometricFractal;
 import geometric.LineSegment;
 import geometric.Point;
 import geometric.Transformable;
+import geometric.utils.PaintFactory;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Iterator;
 
 import java.awt.Color;
-import java.awt.RadialGradientPaint;
 import java.awt.Paint;
 
 public class CrossKochCurve extends AbstractGeometricFractal<CrossKochCurve> {
-	protected Point center;
-	protected Point pointOnCircle;
 	protected List<Transformable> seed;
 	protected List<Transformable> fractalComponents;
 
@@ -37,31 +33,6 @@ public class CrossKochCurve extends AbstractGeometricFractal<CrossKochCurve> {
 
 	public CrossKochCurve(int iterations, boolean reset) {
 		super(iterations, reset);
-	}
-
-	public Paint getPaint() {
-		return getPaint(
-			this.center,
-			this.pointOnCircle
-		);
-	}
-
-	public Paint getPaint(WorldViewer worldViewer) {
-		return getPaint(
-			this.center.toScreen(worldViewer),
-			this.pointOnCircle.toScreen(worldViewer)
-		);
-	}
-
-	protected Paint getPaint(Point center, Point pointOnCircle) {
-		return new RadialGradientPaint(
-			(float) center.getX(),
-			(float) center.getY(),
-			(float) center.distance(pointOnCircle),
-			new float[] {0.3f, 1.0f},
-			new Color[] {NamedColors.WHITE, NamedColors.BLUE}
-			//MultipleGradientPaint.CycleMethod.REPEAT
-		);
 	}
 
 	protected void init() {
@@ -82,9 +53,13 @@ public class CrossKochCurve extends AbstractGeometricFractal<CrossKochCurve> {
 			seed.add(new LineSegment(tmpP2,tmpP1,null));
 		}
 
-		center = new Point(0,0);
-		pointOnCircle = new Point(p1);
 		fractalComponents = seed;
+
+		setPainter(PaintFactory.getRadialPainter(
+			new Point(0,0), p1,
+			new float[] {0.3f, 1.0f},
+			new Color[] {NamedColors.WHITE, NamedColors.BLUE}
+		));
 	}
 
 	public void reset() {

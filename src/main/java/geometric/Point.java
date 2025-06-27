@@ -6,17 +6,16 @@ import utils.color.NamedColors;
 
 import java.util.Objects;
 
-import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Paint;
 
 public class Point extends AbstractShape<Point> {
-	public static final double RADIUS = 3;
+	public static final double EPSILON = 1e-9;
+	public static final double DEFAULT_VISUAL_RADIUS = 3;
 
 	protected double x;
 	protected double y;
-	protected double radius;
+	protected double visualRadius;
 	protected Paint paint;
 
 	public Point() {
@@ -24,43 +23,43 @@ public class Point extends AbstractShape<Point> {
 	}
 
 	public Point(double x, double y) {
-		this(x, y, RADIUS);
+		this(x, y, DEFAULT_VISUAL_RADIUS);
 	}
 
-	public Point(double x, double y, double radius) {
-		this(x, y, radius, NamedColors.WHITE);
+	public Point(double x, double y, double visualRadius) {
+		this(x, y, visualRadius, NamedColors.WHITE);
 	}
 
 	public Point(double x, double y, Paint paint) {
-		this(x, y, RADIUS, paint);
+		this(x, y, DEFAULT_VISUAL_RADIUS, paint);
 	}
 
-	public Point(double x, double y, double radius, Paint paint) {
+	public Point(double x, double y, double visualRadius, Paint paint) {
 		super();
 		this.x = x;
 		this.y = y;
-		this.radius = radius;
+		this.visualRadius = visualRadius;
 		this.paint = paint;
 	}
 
 	public Point(Point other) {
-		this(other.x, other.y, other.radius, other.paint);
+		this(other.x, other.y, other.visualRadius, other.paint);
 	}
 
 	public double getX() { return x; }
 	public double getY() { return y; }
-	public double getRadius() { return radius; }
+	public double getVisualRadius() { return visualRadius; }
 	public Paint getPaint() { return paint; }
 
 	public void setX(double x) { this.x = x; }
 	public void setY(double y) { this.y = y; }
-	public void setRadius(double radius) {
-		if (radius < 0) {
+	public void setVisualRadius(double visualRadius) {
+		if (visualRadius < 0) {
 			throw new IllegalArgumentException(
-				"Radius cannot be negative: " + radius
+				"Radius cannot be negative: " + visualRadius
 			);
 		}
-		this.radius = radius;
+		this.visualRadius = visualRadius;
 	}
 	public void setPaint(Paint paint) { this.paint = paint; }
 	public void set(Point other) { this.set(other.x, other.y); }
@@ -73,25 +72,16 @@ public class Point extends AbstractShape<Point> {
 		return Math.hypot(x - other.x, y - other.y);
 	}
 
-	public Point interpolate(Point other, double t) {
-		double x = (1 - t) * this.x + t * other.x;
-		double y = (1 - t) * this.y + t * other.y;
-		double radius = this.radius;
-		if (this.radius != other.radius) {
-			radius = (1 - t) * this.radius + t * other.radius;
-		}
-		Paint paint = this.paint;
-		return new Point(x, y, radius, paint);
-	}
-
-	public Point getMidpoint(Point other) {
-		return interpolate(other, 0.5);
+	public double distanceSquared(Point other) {
+		double dx = x - other.x;
+		double dy = y - other.y;
+		return (dx * dx) + (dy * dy);
 	}
 
 	public double slope(Point other) {
-		double deltaX = this.x - other.x;
-		double deltaY = this.y - other.y;
-		if (deltaX == 0) {
+		double deltaX = other.x - this.x;
+		double deltaY = other.y - this.y;
+		if (Math.abs(deltaX) < EPSILON) {
 			throw new ArithmeticException("Slope is undefined for vertical lines.");
 		}
 		return deltaY / deltaX;
@@ -121,11 +111,45 @@ public class Point extends AbstractShape<Point> {
 		return angle;
 	}
 
+	public Point interpolate(Point other, double t) {
+		double x = (1 - t) * this.x + t * other.x;
+		double y = (1 - t) * this.y + t * other.y;
+		double visualRadius = this.visualRadius;
+		if (this.visualRadius != other.visualRadius) {
+			visualRadius = (1 - t) * this.visualRadius + t * other.visualRadius;
+		}
+		Paint paint = this.paint;
+		return new Point(x, y, visualRadius, paint);
+	}
+
+	public Point getMidpoint(Point other) {
+		return interpolate(other, 0.5);
+	}
+
+	public Point invert(Circle circle) {
+		double cx = circle.getX();
+		double cy = circle.getY();
+		double r = circle.getRadius();
+		double dx = this.x - cx;
+		double dy = this.y - cy;
+		double distSq = dx * dx + dy * dy;
+
+		if (distSq < EPSILON) {
+			throw new ArithmeticException("Cannot invert the center point of the circle.");
+		}
+
+		double scale = (r * r) / distSq;
+		double invertedX = cx + dx * scale;
+		double invertedY = cy + dy * scale;
+
+		return new Point(invertedX, invertedY, this.visualRadius, this.paint);
+	}
+
 	public Point toScreen(WorldViewer worldViewer) {
 		return new Point(
 			worldViewer.worldToScreenX(x),
 			worldViewer.worldToScreenY(y),
-			radius,
+			visualRadius,
 			paint
 		);
 	}
@@ -134,7 +158,7 @@ public class Point extends AbstractShape<Point> {
 		return new Point(
 			worldViewer.screenToWorldX( (int) Math.round(x) ),
 			worldViewer.screenToWorldY( (int) Math.round(y) ),
-			radius,
+			visualRadius,
 			paint
 		);
 	}
@@ -216,9 +240,9 @@ public class Point extends AbstractShape<Point> {
 
 	public boolean isVisibleOnScreen(WorldViewer worldViewer) {
 		Point screenPoint = this.toScreen(worldViewer);
-		int drawX = (int)Math.round(screenPoint.x - screenPoint.radius);
-		int drawY = (int)Math.round(screenPoint.y - screenPoint.radius);
-		int drawDiameter = (int)Math.max(1, Math.round(2 * screenPoint.radius));
+		int drawX = (int)Math.round(screenPoint.x - screenPoint.visualRadius);
+		int drawY = (int)Math.round(screenPoint.y - screenPoint.visualRadius);
+		int drawDiameter = (int)Math.max(1, Math.round(2 * screenPoint.visualRadius));
 
 		boolean offLeft = drawX + drawDiameter < 0;
 		boolean offTop = drawY + drawDiameter < 0;
@@ -230,9 +254,9 @@ public class Point extends AbstractShape<Point> {
 
 	public void drawWithPaint(Graphics g) {
 		if (paint == null) return;
-		int diameter = (int)Math.max(1, Math.round(2 * radius));
-		int drawX = (int)Math.round(x - radius);
-		int drawY = (int)Math.round(y - radius);
+		int diameter = (int)Math.max(1, Math.round(2 * visualRadius));
+		int drawX = (int)Math.round(x - visualRadius);
+		int drawY = (int)Math.round(y - visualRadius);
 		g.fillOval(drawX, drawY, diameter, diameter);
 	}
 
@@ -272,7 +296,7 @@ public class Point extends AbstractShape<Point> {
 	}
 
 	public int hashCode() {
-		return Objects.hash(x, y, radius, paint);
+		return Objects.hash(x, y, visualRadius, paint);
 	}
 
 	public String toString() {

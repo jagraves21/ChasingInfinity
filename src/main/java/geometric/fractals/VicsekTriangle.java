@@ -2,24 +2,19 @@ package geometric.fractals;
 
 import utils.color.NamedColors;
 
-import renderer.viewer.WorldViewer;
-
 import geometric.AbstractGeometricFractal;
 import geometric.Point;
 import geometric.Transformable;
 import geometric.Polygon;
+import geometric.utils.PaintFactory;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Iterator;
 
 import java.awt.Color;
-import java.awt.RadialGradientPaint;
-import java.awt.Paint;
 
 public class VicsekTriangle extends AbstractGeometricFractal<VicsekTriangle> {
-	protected Point center;
-	protected Point pointOnCircle;
 	protected List<Transformable> seed;
 	protected List<Transformable> fractalComponents;
 
@@ -43,49 +38,23 @@ public class VicsekTriangle extends AbstractGeometricFractal<VicsekTriangle> {
 		return 5;
 	}
 
-	public Paint getPaint() {
-		return getPaint(
-			this.center,
-			this.pointOnCircle
-		);
-	}
-
-	public Paint getPaint(WorldViewer worldViewer) {
-		return getPaint(
-			this.center.toScreen(worldViewer),
-			this.pointOnCircle.toScreen(worldViewer)
-		);
-	}
-
-	protected Paint getPaint(Point center, Point pointOnCircle) {
-		return new RadialGradientPaint(
-			(float) center.getX(),
-			(float) center.getY(),
-			(float) center.distance(pointOnCircle),
-			new float[] {0.0f, 1.0f},
-			new Color[] {NamedColors.AZURE, NamedColors.ROSE}
-			//MultipleGradientPaint.CycleMethod.REPEAT
-		);
-	}
-
 	protected void init() {
 		super.init();
 
 		seed = new LinkedList<>();
 
 		double length = 500;
-		Point p1 = new Point(-length/2, length/2);
-		Point p2 = new Point(p1).translate(length, 0);
-		Point p3 = new Point(p1).translate(length, -length);
-		Point p4 = new Point(p1).translate(0, -length);
-
-		seed.add(
-			new Polygon(new Point[] {p1,p2,p3,p4}, null, true)
+		Polygon square = Polygon.createSquare(
+			new Point(-length/2, length/2), length, null, true
 		);
+		seed.add(square);
 
-		center = p1.getMidpoint(p3);;
-		pointOnCircle = new Point(p3);
 		fractalComponents = seed;
+
+		setPainter(PaintFactory.getRadialPainter(
+			square.centroid(), square.getVertex(0),
+			new Color[] {NamedColors.AZURE, NamedColors.ROSE}
+		));
 	}
 
 	public void reset() {

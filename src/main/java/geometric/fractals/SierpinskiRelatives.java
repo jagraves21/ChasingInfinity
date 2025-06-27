@@ -2,8 +2,6 @@ package geometric.fractals;
 
 import utils.color.NamedColors;
 
-import renderer.viewer.WorldViewer;
-
 import geometric.AbstractGeometricFractal;
 import geometric.Point;
 import geometric.Transformable;
@@ -16,12 +14,8 @@ import java.util.List;
 import java.util.Iterator;
 
 import java.awt.Color;
-import java.awt.RadialGradientPaint;
-import java.awt.Paint;
 
 public class SierpinskiRelatives extends AbstractGeometricFractal<SierpinskiRelatives> {
-	protected Point center;
-	protected Point pointOnCircle;
 	protected List<Transformable> seed;
 	protected List<Transformable> fractalComponents;
 
@@ -45,31 +39,6 @@ public class SierpinskiRelatives extends AbstractGeometricFractal<SierpinskiRela
 		return 8;
 	}
 
-	public Paint getPaint() {
-		return getPaint(
-			this.center,
-			this.pointOnCircle
-		);
-	}
-
-	public Paint getPaint(WorldViewer worldViewer) {
-		return getPaint(
-			this.center.toScreen(worldViewer),
-			this.pointOnCircle.toScreen(worldViewer)
-		);
-	}
-
-	protected Paint getPaint(Point center, Point pointOnCircle) {
-		return new RadialGradientPaint(
-			(float) center.getX(),
-			(float) center.getY(),
-			(float) center.distance(pointOnCircle),
-			new float[] {0.0f, 1.0f},
-			new Color[] {NamedColors.AZURE, NamedColors.ROSE}
-			//MultipleGradientPaint.CycleMethod.REPEAT
-		);
-	}
-
 	protected void init() {
 		super.init();
 
@@ -89,8 +58,6 @@ public class SierpinskiRelatives extends AbstractGeometricFractal<SierpinskiRela
 			)
 		);
 
-		center = p1.getMidpoint(p3);;
-		pointOnCircle = new Point(p3);
 		fractalComponents = seed;
 	}
 

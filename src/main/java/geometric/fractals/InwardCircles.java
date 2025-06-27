@@ -2,25 +2,19 @@ package geometric.fractals;
 
 import utils.color.NamedColors;
 
-import renderer.viewer.WorldViewer;
-
 import geometric.AbstractGeometricFractal;
 import geometric.Circle;
 import geometric.Point;
 import geometric.Transformable;
+import geometric.utils.PaintFactory;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Iterator;
 
 import java.awt.Color;
-import java.awt.MultipleGradientPaint;
-import java.awt.Paint;
-import java.awt.RadialGradientPaint;
 
 public class InwardCircles extends AbstractGeometricFractal<InwardCircles> {
-	protected Point center;
-	protected Point pointOnCircle;
 	protected List<Circle> seed;
 	protected List<Circle> currentCircles;
 	protected List<Transformable> fractalComponents;
@@ -45,36 +39,6 @@ public class InwardCircles extends AbstractGeometricFractal<InwardCircles> {
 		return 4;
 	}
 
-	public Paint getPaint() {
-		return getPaint(
-			this.center,
-			this.pointOnCircle
-		);
-	}
-
-	public Paint getPaint(WorldViewer worldViewer) {
-		return getPaint(
-			this.center.toScreen(worldViewer),
-			this.pointOnCircle.toScreen(worldViewer)
-		);
-	}
-
-	protected Paint getPaint(Point center, Point pointOnCircle) {
-		float[] dist = {0.0f, 0.25f, 0.5f, 0.75f, 1.0f};
-        Color[] colors = {
-			NamedColors.RED, NamedColors.ORANGE, NamedColors.YELLOW,
-			NamedColors.GREEN, NamedColors.BLUE
-		};
-		return new RadialGradientPaint(
-			(float) center.getX(),
-			(float) center.getY(),
-			(float) center.distance(pointOnCircle),
-			dist,
-			colors
-			//MultipleGradientPaint.CycleMethod.REPEAT
-		);
-	}
-
 	protected void init() {
 		super.init();
 
@@ -83,10 +47,19 @@ public class InwardCircles extends AbstractGeometricFractal<InwardCircles> {
 
 		seed.add(circle);
 
-		center = new Point(circle.getCenter());
-		pointOnCircle = new Point(center).translate(0, -circle.getRadius());
 		currentCircles = seed;
 		fractalComponents = new LinkedList<>(seed);
+		
+		Point center = new Point(circle.getCenter());
+		Point pointOnCircle = new Point(center).translate(0, -circle.getRadius());
+		float[] dist = {0.0f, 0.25f, 0.5f, 0.75f, 1.0f};
+        Color[] colors = {
+			NamedColors.RED, NamedColors.ORANGE, NamedColors.YELLOW,
+			NamedColors.GREEN, NamedColors.BLUE
+		};
+		setPainter(PaintFactory.getRadialPainter(
+			center, pointOnCircle, dist, colors
+		));
 	}
 
 	public void reset() {

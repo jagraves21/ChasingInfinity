@@ -2,26 +2,20 @@ package geometric.fractals;
 
 import utils.color.NamedColors;
 
-import renderer.viewer.WorldViewer;
-
 import geometric.AbstractGeometricFractal;
 import geometric.Circle;
 import geometric.Point;
 import geometric.Transformable;
 import geometric.Triangle;
+import geometric.utils.PaintFactory;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Iterator;
 
 import java.awt.Color;
-import java.awt.MultipleGradientPaint;
-import java.awt.Paint;
-import java.awt.RadialGradientPaint;
 
 public class SierpinskiCircle1 extends AbstractGeometricFractal<SierpinskiCircle1> {
-	protected Point center;
-	protected Point pointOnCircle;
 	protected List<Circle> seed;
 	protected List<Circle> currentCircles;
 	protected List<Transformable> fractalComponents;
@@ -46,48 +40,28 @@ public class SierpinskiCircle1 extends AbstractGeometricFractal<SierpinskiCircle
 		return 7;
 	}
 
-	public Paint getPaint() {
-		return getPaint(
-			this.center,
-			this.pointOnCircle
-		);
-	}
-
-	public Paint getPaint(WorldViewer worldViewer) {
-		return getPaint(
-			this.center.toScreen(worldViewer),
-			this.pointOnCircle.toScreen(worldViewer)
-		);
-	}
-
-	protected Paint getPaint(Point center, Point pointOnCircle) {
-		return new RadialGradientPaint(
-			(float) center.getX(),
-			(float) center.getY(),
-			(float) center.distance(pointOnCircle),
-			new float[] {0.0f, 1.0f},
-			new Color[] {NamedColors.BLUE, NamedColors.RED}
-			//MultipleGradientPaint.CycleMethod.REPEAT
-		);
-	}
-
 	protected void init() {
 		super.init();
 
 		seed = new LinkedList<>();
-		Circle circle = new Circle(0, 0, 250, null, false);
+		Triangle triangle = Triangle.createEquilateralFromTop(
+			new Point(0, 250), 500, null, false
+		);
+		Circle circle = triangle.circumcircle();//new Circle(0, 0, 250, null, false);
 
 		seed.add(circle);
-
-		double height = 500;
-		double base = (2 * height) / Math.sqrt(3);
-		Point p1 = new Point(0, height/2);
-		Point p2 = new Point(p1).translate(-base/2, -height);
-		Point p3 = new Point(p1).translate(base/2, -height);
-		center = new Triangle(new Point[] {p1,p2,p3}).centroid();
-		pointOnCircle = new Point(p1);
+		
 		currentCircles = seed;
 		fractalComponents = new LinkedList<>(seed);
+
+		setPainter(PaintFactory.getRadialPainter(
+			triangle.centroid(), triangle.getVertex(0), NamedColors.BLUE, NamedColors.RED
+		));
+		/*setPainter(PaintFactory.getTriGradientPainter(
+			triangle.getVertex(0), NamedColors.RED,
+			triangle.getVertex(1), NamedColors.BLUE,
+			triangle.getVertex(2), NamedColors.GREEN
+		));*/
 	}
 
 	public void reset() {

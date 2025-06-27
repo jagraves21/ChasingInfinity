@@ -1,10 +1,7 @@
 package geometric.fractals;
 
 import utils.color.ColorUtils;
-import utils.color.NamedColors;
 import utils.color.NamedPalettes;
-
-import renderer.viewer.WorldViewer;
 
 import geometric.AbstractGeometricFractal;
 import geometric.LineSegment;
@@ -16,8 +13,6 @@ import java.util.List;
 import java.util.Iterator;
 
 import java.awt.Color;
-import java.awt.RadialGradientPaint;
-import java.awt.Paint;
 
 public class CesaroCurves extends AbstractGeometricFractal<CesaroCurves> {
 	public static final int N_STEPS = 6;
@@ -28,8 +23,6 @@ public class CesaroCurves extends AbstractGeometricFractal<CesaroCurves> {
 	protected double INTERIOR_ANGLE = -Math.toDegrees( Math.acos((BASE/2)/LEGS) );
 	protected double EXTERIOR_ANGLE = INTERIOR_ANGLE - 180;
 
-	protected Point center;
-	protected Point pointOnCircle;
 	protected Color[] colors = null;
 	protected List<Transformable> seed;
 	protected List<Transformable> fractalComponents;
@@ -61,37 +54,6 @@ public class CesaroCurves extends AbstractGeometricFractal<CesaroCurves> {
 		return 15;
 	}
 
-	public Paint getPaint() {
-		return getPaint(
-			this.center,
-			this.pointOnCircle
-		);
-	}
-
-	public Paint getPaint(WorldViewer worldViewer) {
-		return getPaint(
-			this.center.toScreen(worldViewer),
-			this.pointOnCircle.toScreen(worldViewer)
-		);
-	}
-
-	protected Paint getPaint(Point center, Point pointOnCircle) {
-		Color c1 = colors[curIteration % colors.length];
-		Color c2 = colors[
-			(colors.length - (curIteration % colors.length)) % colors.length
-		];
-
-		return new RadialGradientPaint(
-			(float) center.getX(),
-			(float) center.getY(),
-			(float) center.distance(pointOnCircle),
-			new float[] {0.3f, 1.0f},
-			new Color[] {NamedColors.RED, NamedColors.YELLOW}
-			//new Color[] {c1, c2}
-			//MultipleGradientPaint.CycleMethod.REPEAT
-		);
-	}
-
 	protected void init() {
 		super.init();
 
@@ -113,8 +75,6 @@ public class CesaroCurves extends AbstractGeometricFractal<CesaroCurves> {
 		seed.add(new LineSegment(p3,p4,null));
 		seed.add(new LineSegment(p4,p1,null));
 
-		center = p1.getMidpoint(p2);
-		pointOnCircle = new Point(p1);
 		step();
 	}
 
@@ -154,8 +114,6 @@ public class CesaroCurves extends AbstractGeometricFractal<CesaroCurves> {
 		for (Transformable component : fractalComponents) {
 			if (component instanceof LineSegment) {
 				LineSegment linesegment = (LineSegment) component;
-				Paint paint = linesegment.getPaint();
-
 				Point p1 = linesegment.getStart();
 				Point p5 = linesegment.getEnd();
 

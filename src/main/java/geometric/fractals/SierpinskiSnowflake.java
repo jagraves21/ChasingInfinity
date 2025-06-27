@@ -1,21 +1,19 @@
 package geometric.fractals;
 
-import utils.color.NamedColors;
-
-import renderer.viewer.WorldViewer;
+import utils.color.NamedPalettes;
 
 import geometric.AbstractGeometricFractal;
 import geometric.LineSegment;
 import geometric.Point;
 import geometric.Transformable;
 import geometric.Triangle;
+import geometric.utils.PaintFactory;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Iterator;
 
 import java.awt.Color;
-import java.awt.GradientPaint;
 import java.awt.Paint;
 
 public class SierpinskiSnowflake extends AbstractGeometricFractal<SierpinskiSnowflake> {
@@ -25,8 +23,6 @@ public class SierpinskiSnowflake extends AbstractGeometricFractal<SierpinskiSnow
 	public static final double INTERIOR_ANGLE = Math.toDegrees( Math.acos((BASE/2)/LEGS) );
 	public static final double EXTERIOR_ANGLE = INTERIOR_ANGLE - 180;
 
-	protected Point topLeft;
-	protected Point bottomRight;
 	protected List<Transformable> seed;
 	protected List<Transformable> fractalShapes;
 	protected List<Transformable> fractalComponents;
@@ -47,47 +43,32 @@ public class SierpinskiSnowflake extends AbstractGeometricFractal<SierpinskiSnow
 		super(iterations, reset);
 	}
 
-	public Paint getPaint() {
-		return getPaint(
-			this.topLeft,
-			this.bottomRight
-		);
-	}
-
-	public Paint getPaint(WorldViewer worldViewer) {
-		return getPaint(
-			this.topLeft.toScreen(worldViewer),
-			this.bottomRight.toScreen(worldViewer)
-		);
-	}
-
-	protected Paint getPaint(Point topLeft, Point bottomRight) {
-		return new GradientPaint(
-			(float)topLeft.getX(), (float)topLeft.getY(), NamedColors.BLUE,
-			(float)bottomRight.getX(), (float)bottomRight.getY(), NamedColors.CYAN
-		);
-	}
-
 	protected void init() {
 		super.init();
 
 		this.seed = new LinkedList<>();
 
-		Point origin = new Point(0, 0, null);//, NamedColors.WHITE);
-		Point p1 = new Point(origin).translate(0.0, 250.0);
-		Point p2 = new Point(p1).rotate(-DEG_120);
-		Point p3 = new Point(p1).rotate(DEG_120);
+		Point origin = new Point();
+		Triangle triangle = Triangle.createEquilateralFromCenter(
+			origin, 250, null, false
+		);
+		Iterator<Point> iter = triangle.getVertices().iterator();
+		Point p1 = iter.next();
+		Point p2 = iter.next();
+		Point p3 = iter.next();
 
 		seed.add(new LineSegment(p1,p2,null));
 		seed.add(new LineSegment(p2,p3,null));
 		seed.add(new LineSegment(p3,p1,null));
-		seed.add(new Triangle(p1,p2,p3,null,false));
+		seed.add(triangle);
 
-		topLeft = new Point(p1).rotate(DEG_45);
-		bottomRight = new Point(p1).rotate(-DEG_135);
 		fractalShapes = new LinkedList<>(seed);
 		fractalComponents = new LinkedList<>();
-		fractalComponents.add(seed.get(3));
+		fractalComponents.add(triangle);
+
+		setPainter(PaintFactory.getRadialPainter(
+			origin, triangle.getVertex(0), NamedPalettes.SNOW
+		));
 	}
 
 	public void reset() {

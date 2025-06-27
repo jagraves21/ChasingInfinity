@@ -13,7 +13,7 @@ public class NamedPalettes extends NamedColors {
 		BLUE
 	};
 
-	public static final Color[] xRAINBOW = new Color[]{
+	public static final Color[] RAINBOW = new Color[]{
 		RED,
 		ORANGE,
 		YELLOW,
@@ -179,6 +179,12 @@ public class NamedPalettes extends NamedColors {
 		NamedColors.SPANISH_RED,
 		NamedColors.TUFTS_BLUE
 	};
+	
+	public static final Color[] SNOW = new Color[]{
+		NamedColors.ALICE_BLUE,
+		NamedColors.LAVENDER_MIST,
+		NamedColors.CYAN,
+	};
 
 	public static final Color[] xTEST = new Color[]{
 		new Color(149, 69, 133),
@@ -194,7 +200,7 @@ public class NamedPalettes extends NamedColors {
 	private static final Map<String, Color[]> paletteMap = new HashMap<>();
 	static {
 		registerPalette("RGB", RGB);
-		registerPalette("xRAINBOW", xRAINBOW);
+		registerPalette("RAINBOW", RAINBOW);
 		registerPalette("SPECTRUM", SPECTRUM);
 		registerPalette("xFOREST", xFOREST);
 		registerPalette("xSEAWEED", xSEAWEED);
@@ -214,6 +220,7 @@ public class NamedPalettes extends NamedColors {
 		registerPalette("OIL_SLICK", OIL_SLICK);
 		registerPalette("GAS_ON_WATER", GAS_ON_WATER);
 		registerPalette("BIRTHDAY", BIRTHDAY);
+		registerPalette("SNOW", SNOW);
 		registerPalette("xTEST", xTEST);
 	}
 

@@ -47,13 +47,11 @@ public class CakeSierpinskiCarpet extends AbstractGeometricFractal<CakeSierpinsk
 		super.init();
 
 		double length = 500;
-		Point p1 = new Point(-length/2, length/2);
-		Point p2 = new Point(p1).translate(length, 0);
-		Point p3 = new Point(p1).translate(length, -length);
-		Point p4 = new Point(p1).translate(0, -length);
 		List<Polygon> currentSquares = new LinkedList<>();
 		currentSquares.add(
-			new Polygon(new Point[] {p1,p2,p3,p4}, Color.WHITE, true)
+			Polygon.createSquare(
+				new Point(-length/2, length/2), length, Color.WHITE, true
+			)
 		);
 		fractalComponents = new LinkedList<>(currentSquares);
 

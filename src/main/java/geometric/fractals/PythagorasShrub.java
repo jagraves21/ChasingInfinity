@@ -2,8 +2,6 @@ package geometric.fractals;
 
 import utils.color.NamedColors;
 
-import renderer.viewer.WorldViewer;
-
 import geometric.AbstractGeometricFractal;
 import geometric.Point;
 import geometric.Transformable;
@@ -13,13 +11,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Iterator;
 
-import java.awt.Color;
-import java.awt.GradientPaint;
-import java.awt.Paint;
-
 public class PythagorasShrub extends AbstractGeometricFractal<PythagorasShrub> {
-	protected Point topLeft;
-	protected Point bottomRight;
 	protected List<Polygon> seed;
 	protected List<Polygon> currentSquares;
 	protected List<Transformable> fractalComponents;
@@ -44,29 +36,6 @@ public class PythagorasShrub extends AbstractGeometricFractal<PythagorasShrub> {
 		return 10;
 	}
 
-	public Paint getPaint() {
-		return getPaint(
-			this.topLeft,
-			this.bottomRight
-		);
-	}
-
-	public Paint getPaint(WorldViewer worldViewer) {
-		return getPaint(
-			this.topLeft.toScreen(worldViewer),
-			this.bottomRight.toScreen(worldViewer)
-		);
-	}
-
-	protected Paint getPaint(Point topLeft, Point bottomRight) {
-		Point p1 = topLeft.interpolate(bottomRight, 1.0/3.0);
-		Point p2 = topLeft.interpolate(bottomRight, 2.0/3.0);
-		return new GradientPaint(
-			(float)p1.getX(), (float)p1.getY(), NamedColors.INDIGO,
-			(float)p2.getX(), (float)p2.getY(), NamedColors.ROSE
-		);
-	}
-
 	protected void init() {
 		super.init();
 
@@ -74,18 +43,13 @@ public class PythagorasShrub extends AbstractGeometricFractal<PythagorasShrub> {
 		currentSquares = new LinkedList<>();
 
 		double length = 100;
-		Point p1 = new Point(-length/2, length/2)
-			.translate(100,-100);
-		Point p2 = new Point(p1).translate(length, 0);
-		Point p3 = new Point(p1).translate(length, -length);
-		Point p4 = new Point(p1).translate(0, -length);
-
+		Point p1 = new Point(-length/2, length/2).translate(100,-150);
 		seed.add(
-			new Polygon(new Point[] {p1,p2,p3,p4}, NamedColors.SADDLE_BROWN, false)
+			Polygon.createSquare(
+				p1, length, NamedColors.SADDLE_BROWN, false
+			)
 		);
 
-		topLeft = new Point(p1);
-		bottomRight = new Point(p3);
 		currentSquares = seed;
 		fractalComponents = new LinkedList<>(seed);
 	}

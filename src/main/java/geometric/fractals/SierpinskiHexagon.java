@@ -2,21 +2,17 @@ package geometric.fractals;
 
 import utils.color.NamedColors;
 
-import renderer.viewer.WorldViewer;
-
 import geometric.AbstractGeometricFractal;
 import geometric.Point;
 import geometric.Transformable;
 import geometric.Triangle;
+import geometric.utils.PaintFactory;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Iterator;
 
 import java.awt.Color;
-import java.awt.MultipleGradientPaint;
-import java.awt.Paint;
-import java.awt.RadialGradientPaint;
 
 public class SierpinskiHexagon extends AbstractGeometricFractal<SierpinskiHexagon> {
 	protected Point center;
@@ -44,53 +40,20 @@ public class SierpinskiHexagon extends AbstractGeometricFractal<SierpinskiHexago
 		return 10;
 	}
 
-	public Paint getPaint() {
-		return getPaint(
-			this.center,
-			this.pointOnCircle
-		);
-	}
-
-	public Paint getPaint(WorldViewer worldViewer) {
-		return getPaint(
-			this.center.toScreen(worldViewer),
-			this.pointOnCircle.toScreen(worldViewer)
-		);
-	}
-
-	protected Paint getPaint(Point center, Point pointOnCircle) {
-		return new RadialGradientPaint(
-			(float) center.getX(),
-			(float) center.getY(),
-			(float) center.distance(pointOnCircle),
-			new float[] {0.0f, 0.2f, 0.50f, 0.80f, 1.0f},
-			new Color[] {
-				NamedColors.RED, NamedColors.YELLOW, NamedColors.GREEN,
-				NamedColors.YELLOW, NamedColors.RED
-			}
-		);
-	}
-
 	protected void init() {
 		super.init();
 
 		seed = new LinkedList<>();
 
-		double height = 250;
-		double base = (2 * height) / Math.sqrt(3);
-		Point p1 = new Point(0, 0);
-		Point p2 = new Point(p1).translate(-base/2, -height);
-		Point p3 = new Point(p1).translate(base/2, -height);
-
-		/*Color[] colors = {
-			NamedColors.SUNSET_CORAL,
-			NamedColors.MOSS_GREEN,
-			NamedColors.OCEAN_SKY_BLUE,
-			NamedColors.VIOLET_FLARE,
-			NamedColors.GLOW_YELLOW,
-			NamedColors.HOT_SAFFRON
-		};*/
-		Triangle triangle = new Triangle(new Point[] {p1,p2,p3}, null, false);
+		/*Color[] colors = utils.color.ColorUtils.generateGradient(
+				utils.color.NamedPalettes.RAINBOW, 6
+		);*/
+		Triangle triangle = Triangle.createEquilateralFromTop(
+			new Point(), 250, null, false
+		);
+		Iterator<Point> iter = triangle.getVertices().iterator();
+		Point p1 = iter.next();
+		Point p2 = iter.next();
 		for(int ii=0; ii < 6; ii++) {
 			double angle = ii / (double) 6 * 360;
 			Triangle tmpTriangle = new Triangle(triangle).rotateAround(p1, angle);
@@ -98,9 +61,16 @@ public class SierpinskiHexagon extends AbstractGeometricFractal<SierpinskiHexago
 			seed.add(tmpTriangle);
 		}
 
-		center = new Point(p1);
-		pointOnCircle = new Point(p2);
 		fractalComponents = seed;
+			
+		setPainter(PaintFactory.getRadialPainter(
+			p1, p2,
+			new float[] {0.0f, 0.2f, 0.50f, 0.80f, 1.0f},
+			new Color[] {
+				NamedColors.RED, NamedColors.YELLOW, NamedColors.GREEN,
+				NamedColors.YELLOW, NamedColors.RED
+			}
+		));
 	}
 
 	public void reset() {

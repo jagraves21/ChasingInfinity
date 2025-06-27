@@ -2,24 +2,17 @@ package geometric.fractals;
 
 import utils.color.NamedPalettes;
 
-import renderer.viewer.WorldViewer;
-
 import geometric.AbstractGeometricFractal;
 import geometric.Point;
 import geometric.Transformable;
 import geometric.Polygon;
+import geometric.utils.PaintFactory;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Iterator;
 
-import java.awt.Color;
-import java.awt.Paint;
-import java.awt.RadialGradientPaint;
-
 public class TurningSquare extends AbstractGeometricFractal<TurningSquare> {
-	protected Point center;
-	protected Point pointOnCircle;
 	protected Polygon seedSquare;
 	protected Polygon currentSquare;
 	protected List<Transformable> fractalComponents;
@@ -48,53 +41,21 @@ public class TurningSquare extends AbstractGeometricFractal<TurningSquare> {
 		return 20;
 	}
 
-	public Paint getPaint() {
-		return getPaint(
-			this.center,
-			this.pointOnCircle
-		);
-	}
-
-	public Paint getPaint(WorldViewer worldViewer) {
-		return getPaint(
-			this.center.toScreen(worldViewer),
-			this.pointOnCircle.toScreen(worldViewer)
-		);
-	}
-
-	protected Paint getPaint(Point center, Point pointOnCircle) {
-		Color[] colors = NamedPalettes.OIL_SLICK;
-		float[] dist = new float[colors.length];
-		for(int ii=0; ii < dist.length; ii++) {
-			dist[ii] = ii / (float) (dist.length-1);
-		}
-		return new RadialGradientPaint(
-			(float) center.getX(),
-			(float) center.getY(),
-			(float) center.distance(pointOnCircle),
-			dist,
-			colors
-		);
-	}
-
 	protected void init() {
 		super.init();
 
-
 		double length = 500;
-		Point p1 = new Point(-length/2, length/2);
-		Point p2 = new Point(p1).translate(length, 0);
-		Point p3 = new Point(p1).translate(length, -length);
-		Point p4 = new Point(p1).translate(0, -length);
-
-		seedSquare = new Polygon(new Point[] {p1,p2,p3,p4}, null, false);
-
-		center = p1.getMidpoint(p3);
-		pointOnCircle = new Point(p2);
+		seedSquare = Polygon.createSquare(
+			new Point(-length/2, length/2), length, null, false
+		);
 
 		currentSquare = seedSquare;
 		fractalComponents = new LinkedList<>();
 		fractalComponents.add(seedSquare);
+		
+		setPainter(PaintFactory.getRadialPainter(
+			seedSquare.centroid(), seedSquare.getVertex(0), NamedPalettes.OIL_SLICK
+		));
 	}
 
 	public void reset() {

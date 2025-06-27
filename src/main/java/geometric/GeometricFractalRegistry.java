@@ -19,22 +19,23 @@ import java.net.URLDecoder;
 public class GeometricFractalRegistry {
 	private static final String PACKAGE_NAME = "geometric.fractals";
 
-	private static final Map<String, Supplier<AbstractGeometricFractal<?>>> FRACTALS = new TreeMap<>();
+	private static final Map<String, Supplier<AbstractGeometricFractal<?>>> FRACTALS = new TreeMap<>(Collections.reverseOrder());
 
 	public static void register(String name, Supplier<AbstractGeometricFractal<?>> supplier) {
 		FRACTALS.put(name, supplier);
 	}
 
 	public static AbstractGeometricFractal<?> getFractal(String name) {
-		Supplier<AbstractGeometricFractal<?>> supplier = FRACTALS.get(name);
-		if (supplier == null) {
-			throw new IllegalArgumentException("No fractal registered with name: " + name);
-		}
+		Supplier<AbstractGeometricFractal<?>> supplier = getSupplier(name);
 		return supplier.get();
 	}
 
 	public static Supplier<AbstractGeometricFractal<?>> getSupplier(String name) {
-		return FRACTALS.get(name);
+		Supplier<AbstractGeometricFractal<?>> supplier = FRACTALS.get(name);
+		if (supplier == null) {
+			throw new IllegalArgumentException("No fractal registered with name: " + name);
+		}
+		return supplier;
 	}
 
 	public static Map<String, Supplier<AbstractGeometricFractal<?>>> getAll() {

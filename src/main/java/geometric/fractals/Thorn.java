@@ -2,19 +2,17 @@ package geometric.fractals;
 
 import utils.color.NamedColors;
 
-import renderer.viewer.WorldViewer;
-
 import geometric.AbstractGeometricFractal;
 import geometric.LineSegment;
 import geometric.Point;
 import geometric.Transformable;
+import geometric.utils.PaintFactory;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Iterator;
 
 import java.awt.Color;
-import java.awt.RadialGradientPaint;
 import java.awt.Paint;
 
 public class Thorn extends AbstractGeometricFractal<Thorn> {
@@ -43,33 +41,6 @@ public class Thorn extends AbstractGeometricFractal<Thorn> {
 		return 5;
 	}
 
-	public Paint getPaint() {
-		return getPaint(
-			this.center,
-			this.pointOnCircle
-		);
-	}
-
-	public Paint getPaint(WorldViewer worldViewer) {
-		return getPaint(
-			this.center.toScreen(worldViewer),
-			this.pointOnCircle.toScreen(worldViewer)
-		);
-	}
-
-	protected Paint getPaint(Point center, Point pointOnCircle) {
-		return new RadialGradientPaint(
-			(float) center.getX(),
-			(float) center.getY(),
-			(float) center.distance(pointOnCircle),
-			new float[] {0.5f, 1.0f},
-			new Color[] {NamedColors.RED, NamedColors.BLACK}
-			//new float[] {0.0f, 0.5f},
-			//new Color[] {NamedColors.GREEN, NamedColors.SADDLE_BROWN}
-			//MultipleGradientPaint.CycleMethod.REPEAT
-		);
-	}
-
 	protected void init() {
 		super.init();
 
@@ -86,9 +57,13 @@ public class Thorn extends AbstractGeometricFractal<Thorn> {
 		seed.add(new LineSegment(p3, p4, null));
 		seed.add(new LineSegment(p4, p1, null));
 
-		center = p1.getMidpoint(p3);
-		pointOnCircle = new Point(p1);
 		fractalComponents = seed;
+			
+		setPainter(PaintFactory.getRadialPainter(
+			p1.getMidpoint(p3), p1,
+			new float[] {0.5f, 1.0f},
+			new Color[] {NamedColors.RED, NamedColors.BLACK}
+		));
 	}
 
 	public void reset() {
