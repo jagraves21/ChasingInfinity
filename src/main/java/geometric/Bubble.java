@@ -73,9 +73,10 @@ public class Bubble extends Circle {
 	}
 
 	public static Bubble fromCircle(Circle circle) {
+		Color color = circle.getPaint() instanceof Color ? (Color) circle.getPaint() : DEFAULT_COLOR;
 		return Bubble.fromCircle(
 			circle,
-			DEFAULT_COLOR
+			color
 		);
 	}
 	
