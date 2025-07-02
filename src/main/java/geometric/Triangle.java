@@ -11,12 +11,14 @@ import java.awt.Color;
 import java.awt.Paint;
 
 public class Triangle extends BasePolygon<Triangle> {
+	public static final boolean DEFAULT_FILL = false;
+
 	public Triangle(Point p1, Point p2, Point p3) {
-		this(p1, p2, p3, NamedColors.WHITE);
+		this(p1, p2, p3, DEFAULT_COLOR);
 	}
 
 	public Triangle(Point p1, Point p2, Point p3, Paint paint) {
-		this(p1, p2, p3, paint, false);
+		this(p1, p2, p3, paint, DEFAULT_FILL);
 	}
 
 	public Triangle(Point p1, Point p2, Point p3, Paint paint, boolean fill) {
@@ -29,11 +31,11 @@ public class Triangle extends BasePolygon<Triangle> {
 	}
 
 	public Triangle(Point[] vertices) {
-		this(vertices, NamedColors.WHITE);
+		this(vertices, DEFAULT_COLOR);
 	}
 
 	public Triangle(Point[] vertices, Paint paint) {
-		this(vertices, NamedColors.WHITE, false);
+		this(vertices, DEFAULT_COLOR, DEFAULT_FILL);
 	}
 
 	public Triangle(Point[] vertices, Paint paint, boolean fill) {
@@ -41,11 +43,11 @@ public class Triangle extends BasePolygon<Triangle> {
 	}
 
 	public Triangle(List<Point> vertices) {
-		this(vertices, NamedColors.WHITE);
+		this(vertices, DEFAULT_COLOR);
 	}
 
 	public Triangle(List<Point> vertices, Paint paint) {
-		this(vertices, NamedColors.WHITE, false);
+		this(vertices, DEFAULT_COLOR, DEFAULT_FILL);
 	}
 
 	public Triangle(List<Point> vertices, Paint paint, boolean fill) {
@@ -157,11 +159,11 @@ public class Triangle extends BasePolygon<Triangle> {
 	}
 
 	public static Triangle createEquilateralFromCenter(Point center, double height) {
-		return createEquilateralFromCenter(center, height, NamedColors.WHITE);
+		return createEquilateralFromCenter(center, height, DEFAULT_COLOR);
 	}
 
 	public static Triangle createEquilateralFromCenter(Point center, double height, Paint paint) {
-		return createEquilateralFromCenter(center, height, paint, false);
+		return createEquilateralFromCenter(center, height, paint, DEFAULT_FILL);
 	}
 
 	public static Triangle createEquilateralFromCenter(Point center, double height, Paint paint, boolean fill) {
@@ -178,11 +180,11 @@ public class Triangle extends BasePolygon<Triangle> {
 	}
 
 	public static Triangle createEquilateralFromTop(Point top, double height) {
-		return createEquilateralFromTop(top, height, NamedColors.WHITE);
+		return createEquilateralFromTop(top, height, DEFAULT_COLOR);
 	}
 
 	public static Triangle createEquilateralFromTop(Point top, double height, Paint paint) {
-		return createEquilateralFromTop(top, height, paint, false);
+		return createEquilateralFromTop(top, height, paint, DEFAULT_FILL);
 	}
 
 	public static Triangle createEquilateralFromTop(Point top, double height, Paint paint, boolean fill) {

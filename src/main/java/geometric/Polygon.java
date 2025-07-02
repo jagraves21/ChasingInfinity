@@ -8,12 +8,14 @@ import java.util.List;
 import java.awt.Paint;
 
 public class Polygon extends BasePolygon<Polygon> {
+	public static final boolean DEFAULT_FILL = false;
+
 	public Polygon(Point[] vertices) {
-		this(vertices, NamedColors.WHITE);
+		this(vertices, DEFAULT_COLOR);
 	}
 
 	public Polygon(Point[] vertices, Paint paint) {
-		this(vertices, paint, false);
+		this(vertices, paint, DEFAULT_FILL);
 	}
 
 	public Polygon(Point[] vertices, Paint paint, boolean fill) {
@@ -21,11 +23,11 @@ public class Polygon extends BasePolygon<Polygon> {
 	}
 
 	public Polygon(List<Point> vertices) {
-		this(vertices, NamedColors.WHITE);
+		this(vertices, DEFAULT_COLOR);
 	}
 
 	public Polygon(List<Point> vertices, Paint paint) {
-		this(vertices, paint, false);
+		this(vertices, paint, DEFAULT_FILL);
 	}
 
 	public Polygon(List<Point> vertices, Paint paint, boolean fill) {
@@ -57,11 +59,11 @@ public class Polygon extends BasePolygon<Polygon> {
 	}
 
 	public static Polygon createSquare(Point topLeft, double width) {
-		return createSquare(topLeft, width, NamedColors.WHITE);
+		return createSquare(topLeft, width, DEFAULT_COLOR);
 	}
 
 	public static Polygon createSquare(Point topLeft, double width, Paint paint) {
-		return createSquare(topLeft, width, paint, false);
+		return createSquare(topLeft, width, paint, DEFAULT_FILL);
 	}
 
 	public static Polygon createSquare(Point topLeft, double width, Paint paint, boolean fill) {
@@ -77,13 +79,13 @@ public class Polygon extends BasePolygon<Polygon> {
 	}
 
 	public static Polygon createRectangle(Point topLeft, double width, double height) {
-		return createRectangle(topLeft, width, height, NamedColors.WHITE);
+		return createRectangle(topLeft, width, height, DEFAULT_COLOR);
 	}
 
 	public static Polygon createRectangle(
 		Point topLeft, double width, double height, Paint paint
 	) {
-		return createRectangle(topLeft, width, height, paint, false);
+		return createRectangle(topLeft, width, height, paint, DEFAULT_FILL);
 	}
 
 	public static Polygon createRectangle(Point topLeft, double width, double height, Paint paint, boolean fill) {

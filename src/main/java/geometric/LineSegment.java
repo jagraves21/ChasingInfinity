@@ -16,15 +16,13 @@ import java.awt.Paint;
 public class LineSegment extends AbstractShape<LineSegment>
 	implements CompositeTransformable<LineSegment> {
 
-	public static final double EPSILON = 1e-10;
-
 	protected Point start;
 	protected Point end;
 	protected Paint paint;
 	protected boolean drawEndpoints;
 
 	public LineSegment(double x1, double y1, double x2, double y2) {
-		this(x1, y1, x2, y2, NamedColors.WHITE);
+		this(x1, y1, x2, y2, DEFAULT_COLOR);
 	}
 
 	public LineSegment(double x1, double y1, double x2, double y2, Paint paint) {
@@ -42,7 +40,7 @@ public class LineSegment extends AbstractShape<LineSegment>
 	}
 
 	public LineSegment(Point start, Point end) {
-		this(start, end, NamedColors.WHITE);
+		this(start, end, DEFAULT_COLOR);
 	}
 
 	public LineSegment(Point start, Point end, Paint paint) {

@@ -10,7 +10,6 @@ import java.awt.Graphics;
 import java.awt.Paint;
 
 public class Point extends AbstractShape<Point> {
-	public static final double EPSILON = 1e-9;
 	public static final double DEFAULT_VISUAL_RADIUS = 3;
 
 	protected double x;
@@ -27,7 +26,7 @@ public class Point extends AbstractShape<Point> {
 	}
 
 	public Point(double x, double y, double visualRadius) {
-		this(x, y, visualRadius, NamedColors.WHITE);
+		this(x, y, visualRadius, DEFAULT_COLOR);
 	}
 
 	public Point(double x, double y, Paint paint) {

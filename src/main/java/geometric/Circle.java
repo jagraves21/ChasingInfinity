@@ -12,8 +12,8 @@ import java.awt.Graphics2D;
 import java.awt.Paint;
 
 public class Circle extends AbstractShape<Circle> {
-	public static final double EPSILON = 1e-9;
 	public static final double DEFAULT_RADIUS = 10;
+	public static final boolean DEFAULT_FILL = false;
 
 	protected Point center;
 	protected double radius;
@@ -29,18 +29,18 @@ public class Circle extends AbstractShape<Circle> {
 	}
 
 	public Circle(Point center, double radius) {
-		this(center, radius, NamedColors.WHITE);
+		this(center, radius, DEFAULT_COLOR);
 	}
 
 	public Circle(Point center, double radius, Paint paint) {
-		this(center, radius, paint, false);
+		this(center, radius, paint, DEFAULT_FILL);
 	}
 
 	public Circle(Point center, double radius, Paint paint, boolean fill) {
 		this(center, radius, paint, fill, true);
 	}
 	
-	public Circle(Point center, double radius, Paint paint, boolean fill, boolean copy) {
+	protected Circle(Point center, double radius, Paint paint, boolean fill, boolean copy) {
 		super();
 		if (copy) {
 			this.center = new Point(center);
@@ -57,11 +57,11 @@ public class Circle extends AbstractShape<Circle> {
 	}
 
 	public Circle(double x, double y, double radius) {
-		this(x, y, radius, NamedColors.WHITE);
+		this(x, y, radius, DEFAULT_COLOR);
 	}
 
 	public Circle(double x, double y, double radius, Paint paint) {
-		this(x, y, radius, paint, false);
+		this(x, y, radius, paint, DEFAULT_FILL);
 	}
 
 	public Circle(double x, double y, double radius, Paint paint, boolean fill) {
@@ -70,7 +70,7 @@ public class Circle extends AbstractShape<Circle> {
 			radius,
 			paint,
 			fill,
-			false
+			DEFAULT_FILL
 		);
 	}
 
