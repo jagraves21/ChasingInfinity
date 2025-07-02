@@ -139,44 +139,51 @@ public abstract class AbstractLSystemFractal extends AbstractFractal {
 
 	public void draw1(Graphics g, WorldViewer worldViewer) {
 		Graphics2D g2d = (Graphics2D) g.create();
-		Paint paint = getPaint(worldViewer);
-		if(paint != null) g2d.setPaint(paint);
+		try {
+			Paint paint = getPaint(worldViewer);
+			if(paint != null) g2d.setPaint(paint);
 
-		TurtleState turtle = new TurtleState(initialTurtle);
-		for (int ii = 0; ii < currentSequence.length(); ii++) {
-			char symbol = currentSequence.charAt(ii);
-			if (symbol == '#') {
-				paint = getPaint(worldViewer);
-				if(paint != null) g2d.setPaint(paint);
+			TurtleState turtle = new TurtleState(initialTurtle);
+			for (int ii = 0; ii < currentSequence.length(); ii++) {
+				char symbol = currentSequence.charAt(ii);
+				if (symbol == '#') {
+					paint = getPaint(worldViewer);
+					if(paint != null) g2d.setPaint(paint);
+				}
+				turtle.updateState(symbol, g2d, worldViewer);
 			}
-			turtle.updateState(symbol, g2d, worldViewer);
+		} finally {
+			g2d.dispose();
 		}
-		g2d.dispose();
 	}
 
 	public void draw2(Graphics g, WorldViewer worldViewer) {
 		System.out.println(worldViewer);
 		Graphics2D g2d = (Graphics2D) g.create();
-		AffineTransform originalTransform = g2d.getTransform();
+		try {
+			AffineTransform originalTransform = g2d.getTransform();
 
-		AffineTransform worldToScreen =
-			worldViewer.getWorldToScreenTransform(originalTransform);
-		g2d.setTransform(worldToScreen);
-		g2d.setStroke(
-			new java.awt.BasicStroke((float)(1/worldViewer.getZoom()))
-		);
+			AffineTransform worldToScreen =
+				worldViewer.getWorldToScreenTransform(originalTransform);
+			g2d.setTransform(worldToScreen);
+			g2d.setStroke(
+				new java.awt.BasicStroke((float)(1/worldViewer.getZoom()))
+			);
 
-		Paint paint = getPaint(worldViewer);
-		if(paint != null) g2d.setPaint(paint);
+			Paint paint = getPaint(worldViewer);
+			if(paint != null) g2d.setPaint(paint);
 
-		TurtleState turtle = new TurtleState(initialTurtle);
-		for (int ii = 0; ii < currentSequence.length(); ii++) {
-			char symbol = currentSequence.charAt(ii);
-			turtle.updateState(symbol, g2d, worldViewer);
+			TurtleState turtle = new TurtleState(initialTurtle);
+			for (int ii = 0; ii < currentSequence.length(); ii++) {
+				char symbol = currentSequence.charAt(ii);
+				turtle.updateState(symbol, g2d, worldViewer);
+			}
+
+			// this is not needed as dispose is called
+			// g2d.setTransform(originalTransform);
+		} finally {
+			g2d.dispose();
 		}
-
-		// g2d.setTransform(originalTransform);
-		g2d.dispose();
 	}
 
 	public void draw(Graphics g, WorldViewer worldViewer) {
