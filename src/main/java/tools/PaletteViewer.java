@@ -33,36 +33,39 @@ public class PaletteViewer {
 			protected void paintComponent(Graphics g) {
 				super.paintComponent(g);
 				Graphics2D g2d = (Graphics2D) g.create();
-				int width = getWidth();
-				int height = getHeight();
-				int topHeight = height / 2;
+				try {
+					int width = getWidth();
+					int height = getHeight();
+					int topHeight = height / 2;
 
-				int[] xPositions = new int[colors.length + 1];
-				for (int ii = 0; ii <= colors.length; ii++) {
-					xPositions[ii] = Math.round(ii * (width / (float) colors.length));
+					int[] xPositions = new int[colors.length + 1];
+					for (int ii = 0; ii <= colors.length; ii++) {
+						xPositions[ii] = Math.round(ii * (width / (float) colors.length));
+					}
+
+					float[] fractions = new float[colors.length];
+					for (int ii = 0; ii < colors.length; ii++) {
+						int x = xPositions[ii];
+						int w = xPositions[ii + 1] - x;
+
+						g2d.setColor(colors[ii]);
+						g2d.fillRect(x, 0, w, topHeight);
+
+						fractions[ii] = (x + w / 2f) / width;
+					}
+
+
+					Paint paint = new LinearGradientPaint(
+						0, 0,
+						width, 0,
+						fractions,
+						colors
+					);
+					g2d.setPaint(paint);
+					g2d.fillRect(0, topHeight, width, height);
+				} finally {
+					g2d.dispose();
 				}
-
-				float[] fractions = new float[colors.length];
-				for (int ii = 0; ii < colors.length; ii++) {
-					int x = xPositions[ii];
-					int w = xPositions[ii + 1] - x;
-
-					g2d.setColor(colors[ii]);
-					g2d.fillRect(x, 0, w, topHeight);
-
-					fractions[ii] = (x + w / 2f) / width;
-				}
-
-
-				Paint paint = new LinearGradientPaint(
-					0, 0,
-					width, 0,
-					fractions,
-					colors
-				);
-				g2d.setPaint(paint);
-				g2d.fillRect(0, topHeight, width, height);
-				g2d.dispose();
 			}
 		};
 	}
