@@ -218,7 +218,7 @@ public class Circle extends AbstractShape<Circle> {
 	public Circle toScreen(WorldViewer worldViewer) {
 		return new Circle(
 			center.toScreen(worldViewer),
-			radius / worldViewer.getZoom(),
+			radius * worldViewer.getZoom(),
 			paint,
 			fill,
 			false
@@ -228,7 +228,7 @@ public class Circle extends AbstractShape<Circle> {
 	public Circle toWorld(WorldViewer worldViewer) {
 		return new Circle(
 			center.toWorld(worldViewer),
-			radius * worldViewer.getZoom(),
+			radius / worldViewer.getZoom(),
 			paint,
 			fill,
 			false
