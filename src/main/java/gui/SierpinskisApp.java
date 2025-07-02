@@ -66,7 +66,9 @@ public class SierpinskisApp {
 			"SierpinskiCircle2",
 			"SierpinskiCircle3",
 			"SierpinskiCurve",
-			"SierpinskiTriangle"
+			"SierpinskiTriangle",
+			"TernaryTree",
+			"TernaryTree2"
 		};
 		for (String name :geometricSierpinskis) {
 			fractalSuppliers.add(() -> {
