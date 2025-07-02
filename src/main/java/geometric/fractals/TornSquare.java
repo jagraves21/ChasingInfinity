@@ -113,11 +113,14 @@ public class TornSquare extends AbstractGeometricFractal<TornSquare> {
 
 	public void draw(Graphics g, WorldViewer worldViewer) {
 		Graphics tmpG = g.create();
-		tmpG.setColor(NamedColors.NAVY_BLUE);
-		tmpG.fillRect(
-			0, 0, worldViewer.getScreenWidth(), worldViewer.getScreenHeight()
-		);
-		tmpG.dispose();
+		try {
+			tmpG.setColor(NamedColors.NAVY_BLUE);
+			tmpG.fillRect(
+				0, 0, worldViewer.getScreenWidth(), worldViewer.getScreenHeight()
+			);
+		} finally {
+			tmpG.dispose();
+		}
 		super.draw(g, worldViewer);
 	}
 
