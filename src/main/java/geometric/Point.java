@@ -125,6 +125,20 @@ public class Point extends AbstractShape<Point> {
 		return interpolate(other, 0.5);
 	}
 
+	public static double angleAtBInRadians(Point A, Point B, Point C) {
+		Point BA = new Point(A).translate(-B.getX(), -B.getY());
+		Point BC = new Point(C).translate(-B.getX(), -B.getY());
+
+		double dot = BA.dot(BC);
+		double cross = BA.cross(BC);
+
+		return Math.atan2(cross, dot);
+	}
+
+	public static double angleAtBInDegrees(Point A, Point B, Point C) {
+		return Math.toDegrees(angleAtBInRadians(A, B, C));
+	}
+
 	public Point invert(Circle circle) {
 		double cx = circle.getX();
 		double cy = circle.getY();

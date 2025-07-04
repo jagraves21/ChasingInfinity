@@ -12,18 +12,19 @@ import java.awt.Paint;
 
 public class Triangle extends BasePolygon<Triangle> {
 	public static final boolean DEFAULT_FILL = false;
+	private static final boolean DEFAULT_DEEP_COPY = true;
 
-	public Triangle(Point p1, Point p2, Point p3) {
-		this(p1, p2, p3, DEFAULT_COLOR);
+	public Triangle(Point A, Point B, Point C) {
+		this(A, B, C, DEFAULT_COLOR);
 	}
 
-	public Triangle(Point p1, Point p2, Point p3, Paint paint) {
-		this(p1, p2, p3, paint, DEFAULT_FILL);
+	public Triangle(Point A, Point B, Point C, Paint paint) {
+		this(A, B, C, paint, DEFAULT_FILL);
 	}
 
-	public Triangle(Point p1, Point p2, Point p3, Paint paint, boolean fill) {
+	public Triangle(Point A, Point B, Point C, Paint paint, boolean fill) {
 		this(
-			Arrays.asList(p1, p2, p3),
+			Arrays.asList(A, B, C),
 			paint,
 			fill,
 			true
@@ -39,7 +40,11 @@ public class Triangle extends BasePolygon<Triangle> {
 	}
 
 	public Triangle(Point[] vertices, Paint paint, boolean fill) {
-		this(Arrays.asList(vertices), paint, fill, true);
+		this(vertices, paint, fill, DEFAULT_DEEP_COPY);
+	}
+	
+	protected Triangle(Point[] vertices, Paint paint, boolean fill, boolean deepCopy) {
+		this(Arrays.asList(vertices), paint, fill, deepCopy);
 	}
 
 	public Triangle(List<Point> vertices) {
@@ -62,7 +67,7 @@ public class Triangle extends BasePolygon<Triangle> {
 	}
 
 	public Triangle(Triangle other) {
-		this(other.vertices, other.paint, other.fill, true);
+		this(other.vertices, other.paint, other.fill, DEFAULT_DEEP_COPY);
 	}
 
 	protected BasePolygon<Triangle> createCopy(
@@ -76,24 +81,114 @@ public class Triangle extends BasePolygon<Triangle> {
 	}
 
 	public double area() {
-		// area: |x1(y2 - y3) + x2(y3 - y1) + x3(y1 - y2)| / 2
-		Point p1 = getVertex(0);
-		Point p2 = getVertex(1);
-		Point p3 = getVertex(2);
+		// area: |Ax(By - Cy) + Bx(Cy - Ay) + Cx(Ay - By)| / 2
+		Point A = getVertex(0);
+		Point B = getVertex(1);
+		Point C = getVertex(2);
 		return Math.abs(
-			p1.getX() * (p2.getY() - p3.getY()) +
-			p2.getX() * (p3.getY() - p1.getY()) +
-			p3.getX() * (p1.getY() - p2.getY())
+			A.getX() * (B.getY() - C.getY()) +
+			B.getX() * (C.getY() - A.getY()) +
+			C.getX() * (A.getY() - B.getY())
 		) / 2.0;
 	}
 
 	public Point centroid() {
-		Point p1 = getVertex(0);
-		Point p2 = getVertex(1);
-		Point p3 = getVertex(2);
+		Iterator<Point> iter = getVertices().iterator();
+		Point A = iter.next();
+		Point B = iter.next();
+		Point C = iter.next();
 		return new Point(
-			(p1.getX() + p2.getX() + p3.getX()) / 3,
-			(p1.getY() + p2.getY() + p3.getY()) / 3
+			(A.getX() + B.getX() + C.getX()) / 3,
+			(A.getY() + B.getY() + C.getY()) / 3
+		);
+	}
+
+	public Point orthocenter() {
+		Iterator<Point> iter = getVertices().iterator();
+		Point A = iter.next();
+		Point B = iter.next();
+		Point C = iter.next();
+		double Ax = A.getX(), Ay = A.getY();
+		double Bx = B.getX(), By = B.getY();
+		double Cx = C.getX(), Cy = C.getY();
+
+		double mBC, mAC;
+
+		boolean BC_vertical = Math.abs(Bx - Cx) < EPSILON;
+		boolean AC_vertical = Math.abs(Ax - Cx) < EPSILON;
+
+		if (AC_vertical && BC_vertical) {
+				throw new ArithmeticException("Degenerate triangle: two vertical sides");
+		} else if (BC_vertical) {
+			// BC vertical, altitude from A is horizontal
+			mAC = (Ay - Cy) / (Ax - Cx);
+			double mB = -1 / mAC;
+			double yA = Ay;
+			double cB = By - mB * Bx;
+			double x = Cx;
+			double y = mB * x + cB;
+			return new Point(x, y);
+		} else if (AC_vertical) {
+			// AC vertical, altitude from B is horizontal
+			mBC = (By - Cy) / (Bx - Cx);
+			double mA = -1 / mBC;
+			double yB = By;
+			double cA = Ay - mA * Ax;
+			double x = Cx;
+			double y = mA * x + cA;
+			return new Point(x, y);
+		} else {
+			// general case
+			mBC = (By - Cy) / (Bx - Cx);
+			mAC = (Ay - Cy) / (Ax - Cx);
+			double mA = -1 / mBC;
+			double mB = -1 / mAC;
+			double cA = Ay - mA * Ax;
+			double cB = By - mB * Bx;
+			double x = (cB - cA) / (mA - mB);
+			double y = mA * x + cA;
+			return new Point(x, y);
+		}
+	}
+
+	public static Point footOfAltitude(Point A, Point B, Point C) {
+		double Ax = A.getX();
+		double Ay = A.getY();
+
+		double mBC;
+		try {
+			mBC = B.slope(C);  // slope of BC
+		} catch (ArithmeticException e) {
+			// BC is vertical
+			return new Point(B.getX(), Ay);
+		}
+
+		if (Math.abs(mBC) < EPSILON) {
+			// BC horizontal line
+			return new Point(Ax, B.getY());
+		}
+
+		double mA = -1 / mBC;
+		double cBC = B.getY() - mBC * B.getX();
+		double cA = Ay - mA * Ax;
+		double x = (cA - cBC) / (mBC - mA);
+		double y = mBC * x + cBC;
+
+		return new Point(x, y);
+	}
+
+	public Triangle orthicTriangle() {
+		Iterator<Point> iter = getVertices().iterator();
+		Point A = iter.next();
+		Point B = iter.next();
+		Point C = iter.next();
+		
+		Point footFromA = footOfAltitude(A, B, C);
+		Point footFromB = footOfAltitude(B, A, C);
+		Point footFromC = footOfAltitude(C, A, B);
+		
+		return new Triangle(
+			Arrays.asList(footFromA, footFromB, footFromC), paint, fill, false
 		);
 	}
 
@@ -125,9 +220,9 @@ public class Triangle extends BasePolygon<Triangle> {
 		Point B = iter.next();
 		Point C = iter.next();
 
-		double x1 = A.getX(), y1 = A.getY();
-		double x2 = B.getX(), y2 = B.getY();
-		double x3 = C.getX(), y3 = C.getY();
+		double Ax = A.getX(), Ay = A.getY();
+		double BX = B.getX(), By = B.getY();
+		double Cx = C.getX(), Cy = C.getY();
 
 		double d = 4 * signedArea();
 
@@ -139,13 +234,13 @@ public class Triangle extends BasePolygon<Triangle> {
 		double x2Sq = B.dot(B);
 		double x3Sq = C.dot(C);
 
-		double ux = (x1Sq * (y2 - y3) +
-			x2Sq * (y3 - y1) +
-			x3Sq * (y1 - y2)) / d;
+		double ux = (x1Sq * (By - Cy) +
+			x2Sq * (Cy - Ay) +
+			x3Sq * (Ay - By)) / d;
 
-		double uy = (x1Sq * (x3 - x2) +
-			x2Sq * (x1 - x3) +
-			x3Sq * (x2 - x1)) / d;
+		double uy = (x1Sq * (Cx - BX) +
+			x2Sq * (Ax - Cx) +
+			x3Sq * (BX - Ax)) / d;
 
 		Point circumcenter = new Point(ux, uy);
 		double radius = circumcenter.distance(A);
@@ -174,9 +269,9 @@ public class Triangle extends BasePolygon<Triangle> {
 		Point bottomRight = new Point(center).translate(dx, -halfHeight);
 		Point bottomLeft = new Point(center).translate(-dx, -halfHeight);
 
-		Point[] vertices = new Point[] { top, bottomRight, bottomLeft };
-
-		return new Triangle(vertices, paint, fill);
+		return new Triangle(
+			Arrays.asList(top, bottomRight, bottomLeft), paint, fill, false
+		);
 	}
 
 	public static Triangle createEquilateralFromTop(Point top, double height) {
@@ -193,8 +288,9 @@ public class Triangle extends BasePolygon<Triangle> {
 		Point bottomRight = new Point(top).translate(dx, -height);
 		Point bottomLeft = new Point(top).translate(-dx, -height);
 
-		Point[] vertices = new Point[] {top, bottomRight, bottomLeft};
-		return new Triangle(vertices, paint, fill);
+		return new Triangle(
+			Arrays.asList(top, bottomRight, bottomLeft), paint, fill, true
+		);
 	}
 
 }
